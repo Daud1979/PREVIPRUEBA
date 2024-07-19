@@ -1,0 +1,146 @@
+<%- include('./partials/headNav') %>
+<div class="container">
+  <!--EMPRESAS-->
+    <div class="empresas">
+        <div class="headEmpresa">
+            <h4>REGISTRAR NUEVA EMPRESA</h4>
+            <form >
+                <div class="formEmpresa">
+                    <div class="rowlabelinput">
+                    <div class="labelinput">                    
+                        <label for="">Razon Social</label>                    
+                        <input type="text" required id="razonsocial" name="razonsocial" >
+                    </div>
+                    <div class="labelinput">                    
+                        <label for="">CIF</label>                    
+                        <input type="text" required id="CIF" name="CIF" >                  
+                    </div> 
+                    <div class="labelinput">
+                        <label for="">Grupo Empresarial</label>
+                        <input type="text" id="grupoempresarial" required name="grupoempresarial" >
+                    </div>             
+                    </div> 
+
+                    <div class="rowlabelinput">            
+                    <div class="labelinput">
+                        <label for="">Codigo CNAE</label>
+                        <input type="text" required id="CNAE" name="CNAE" >
+                    </div>
+                    <div class="labelinput">
+                        <label for="">Descripcion CNAE</label>
+                        <input type="text" id="descripcionCNAE" name="descripcionCNAE" >
+                    </div>
+                    <div class="labelinput">
+                        <label for="">Ciudad</label>
+                        <input type="text" id="ciudad" name="ciudad" >
+                    </div>
+                    </div>
+
+                    <div class="rowlabelinput">
+                    <div class="labelinput">
+                        <label for="">Codigo Postal</label>
+                        <input type="number" id="codigopostal" required name="codigopostal" >
+                    </div>
+                    <div class="labelinput">
+                        <label for="">Direccion Empresa</label>
+                        <input type="text" id="direccionempresa" required name="direccionempresa" >
+                    </div>
+                    <div class="labelinput">
+                        <label for="">Encargado</label>
+                        <input type="text" id="encargado" required name="encargado" >
+                    </div>
+                              
+                    </div>
+
+                    <div class="rowlabelinput">
+                        <div class="labelinput">
+                            <label for="">Telefono</label>
+                            <input type="number" id="telefonoempresa" required name="telefonoempresa" >
+                        </div> 
+                        <div class="labelinput">
+                            <label for="">Email Empresa</label>
+                            <input type="text" id="emailempresa" required name="emailempresa" >
+                        </div>      
+                        <div class="labelinput">
+                            <label for="">Nº Trabajadores</label>
+                            <input type="number" id="ntrabajadoresempresa" required name="ntrabajadoresempresa" >
+                        </div>     
+                                 
+                    </div>
+                </div>
+                <div class="btnInput">
+                    <label id="message" for=""></label>
+                    <div class="button">
+                        <input type="button" name="registrarEmpresa" id="registrarEmpresa" value="Registrar">
+                        <input type="button" name="cancelarEmpresa" id="cancelarEmpresa" value="Cancelar">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="listEmpresa">
+            <div class="headLista">
+                <h4>LISTA DE EMPRESA</h4>
+                <input type="text" name="buscarempresa" id="buscarempresa" placeholder="Escriba la empresa">
+            </div>
+            <div class="tablaEmpresaScroll">
+            <table id="tablaEmpresa">
+                <thead>
+                    <tr>
+                        <th>CIF</th>
+                        <th>Razon Social</th>
+                        <th>Grupo Empresarial</th>
+                        <th>CNAE</th>
+                        <th>Descripcion CNAE</th>
+                        <th>Direccion Empresa</th>
+                        <th>Encargado Empresa</th>
+                        <th>Email Empresa</th>
+                        <th>Telefono</th>
+                        <th>Ciudad</th>
+                        <th>C.P.</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% empresas.forEach(empresa => { %>
+                    <tr>
+                        <td><%= empresa.CIF %></td>
+                        <td><%= empresa.razonSocial %></td>
+                        <td><%= empresa.grupoEmpresarial %></td>
+                        <td><%= empresa.CNAE %></td>
+                        <td><%= empresa.descripcionCNAE %></td>
+                        <td><%= empresa.direccionEmpresa %></td>
+                        <td><%= empresa.encargadoEmpresa %></td>
+                        <td><%= empresa.email%></td>
+                        <td style="text-align: end; padding-right: 5px;"><%= empresa.telefono %></td>
+                        <td><%= empresa.ciudad %></td>
+                        <td style="text-align: end; padding-right: 5px;"><%= empresa.codigopostal %></td>
+                        <td style="text-align: center;">
+                            <button id='btncentrosempresa'>
+                                <span class="material-symbols-outlined homework">
+                                    home_work
+                                    </span>
+                            </button >
+                            <button id='btnpersonalempresa'>
+                            <span class="material-symbols-outlined personapron">
+                                person_apron
+                            </span>
+                            </button>
+                            
+                            <button id='btndatosempresa'>
+                                <span class="material-symbols-outlined gridview">
+                                    grid_view
+                                </span>
+                            </button>
+                        </td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+  <!--FIN EMPRESAS-->
+  
+  <!--USUARIOS-->
+  <!--FIN USUARIOS-->
+</div>

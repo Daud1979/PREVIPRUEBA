@@ -1,0 +1,221 @@
+/*
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+*/
+@import url("https://db.onlinewebfonts.com/c/39ae2f69993fddd81291d07bffc91e80?family=Cocon-Light");
+*{
+    margin: 0;
+    padding: 0;
+}
+html{
+    font-family: Arial, Helvetica, sans-serif;
+   font-size: 0.8rem;
+}
+.header{    
+    background: white;
+    display: flex;
+    justify-content:space-between;
+    font-size: 0.9rem;    
+    align-items: center;
+    padding: 0 30px 0 30px; 
+    font-family: 'Cocon-Light';  
+}
+.logohead{
+    width: 150px;  
+}
+ul{
+    display:inline-flex;
+   
+    list-style: none;
+    background-color:transparent
+    
+}
+li{
+    text-decoration: none;    
+    padding: 3px;
+    background: transparent;
+}
+.header *{
+    text-decoration:none;   
+    
+}
+li a{
+    background-color:#4057FB;
+    color: white;
+    padding: 10px;
+    border-radius:  10px  0  10px 0;
+    box-shadow:  0 5px 10px black;  
+}
+li a:hover{   
+    color: #151616;
+    background: rgb(255, 254, 254);
+    border: solid 1px black;
+    padding: 10px;
+    border-radius:  10px  0  10px 0;
+}
+/**/
+.container{
+    width: 95%;
+    height: 87vh;    
+    margin: 0 auto;
+}
+.empresas{
+    width: 100%;
+    height: 100%;    
+    border-radius: 5px;
+}
+.headEmpresa{
+    background:#353535;
+    border-radius: 5px;
+    height: 25%;
+    width: 100%;
+    text-align: center;   
+}
+.headEmpresa h4{
+    padding-top: 1rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 5px 0 15px rgba(250, 248, 248, 0.2); 
+    color: white;
+}
+.formEmpresa{
+    display: flex;
+    width: 98%;
+    margin: 0 auto;   
+}
+.rowlabelinput{
+   width: 25%;
+   margin: 0 auto;
+}
+
+.labelinput{
+    padding-bottom:3px ;    
+    text-align: start;    
+    display: flex;   
+    align-items: center;  
+    color: white;
+}
+.labelinput label{
+    display: block;   
+    width: 36%;
+    text-shadow: 5px 0 15px rgba(250, 248, 248, 0.2);    
+}
+.labelinput input{
+    font-size: 1.2rem;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding-left: 5px;
+    display: block;    
+}
+.btnInput{
+    width: 98%;
+    text-align: end;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+   
+}
+.button{
+    margin: auto 0;
+   
+}
+.alert{
+    color: red;
+    font-size: 1.5rem;
+    text-shadow: 5px 0 15px rgba(255, 255, 255, 0.1);  
+}
+.confirm{
+    color:white;
+    text-shadow: 5px 0 15px rgba(27, 38, 122, 1);  
+    font-size: 1.5rem;
+}
+.btnInput input{
+    padding: 6px 15px;
+    background: white;
+    outline: none;
+    border-radius: 7px 0 7px 0;
+    border: none;
+    font-size: 1rem;
+}
+.btnInput input:hover{
+    background:#4057FB;
+    color: white;
+    outline: white;
+    border-color: 1px solid white;
+}
+#CNAE{
+    width: 100px;
+}
+#CIF{
+    width: 100px;
+}
+#ntrabajadoresempresa{
+    width: 60px;
+}
+#codigopostal{
+    width: 80px;
+}
+#telefonoempresa{
+    width: 120px;
+}
+
+/*LISTA DE EMPRESA*/
+.listEmpresa{
+    margin-top: 0.2rem;
+    border-radius: 5px;
+    height: 65vh;
+    width: 100%;        
+    display: flex;
+    flex-direction: column;
+    gap:0.2rem;
+}
+.headLista{
+    background: rgb(192, 190, 190);
+    border-radius: 5px;    
+}
+.headLista input{
+    padding: 0.2rem;
+    margin: 0.5rem;
+    width:  50%;
+    min-width: 50%;
+    outline: none;    
+    border: none;
+    border-radius: 5px;
+    padding-left: 1rem;
+}
+.headLista h4{    
+    margin-bottom: 0.5rem 0;
+    text-shadow: 5px 0 15px rgba(250, 248, 248, 1); 
+    color: rgb(0, 0, 0); 
+    text-align: center;     
+}
+#tablaEmpresa{
+   border: 1px solid rgb(192, 190, 190);
+   border-radius: 5px;
+   width: 100%;
+}
+
+.tablaEmpresaScroll{
+    overflow: scroll;
+    width: 100%;
+    height: 100%;
+}
+#tablaEmpresa thead{
+    background: #131313;
+    color:white;
+    border-color: 1px solid white;    
+}
+#tablaEmpresa td{
+    border: 1px solid rgb(192, 190, 190);
+    background: rgb(236, 236, 236);
+}
+.homework{
+    color: green;
+}
+.personapron{
+    color:brown;
+}
+.gridview{
+    color: rgb(87, 87, 82);
+}

@@ -1,0 +1,54 @@
+<%- include('./partials/head') %>
+<div class="slider sliderSession">
+    <div class="session">
+        <h2 class="title">INICIAR SESION</h2>
+        <h3 class="title">PREVIWORK</h3>
+      
+        <span class="material-symbols-outlined userWork">
+            home_work
+            </span>
+        <div class="sessionData">
+            <form class="formLogin" method="post" action="/user/access">
+                <div class="userData">
+                    <div class="userData_label">
+                        <label for="usuario">Usuario:</label>
+                    </div>
+                    <div class="userData_input">
+                        <span class="material-symbols-outlined user">
+                            account_circle
+                            </span>
+                        <input type="text" name="usuario"  id="usuario">
+                    </div>
+                </div>
+                <div class="userData">
+                    <div class="userData_label">
+                        <label for="pass">Contraseña:</label>
+                    </div>
+                    <div class="userData_input">
+                        <span class="material-symbols-outlined user">
+                            key
+                            </span>
+                        <input type="password" name="pass" id="pass">
+                    </div>
+                </div>
+                <div class="userData">
+                    <div class="userData_label">
+                        <label for="email">Email:</label>
+                    </div>
+                    <div class="userData_input">
+                        <span class="material-symbols-outlined user">
+                            email
+                            </span>
+                        <input type="email" name="email"  id="email">
+                    </div>
+                </div>
+           
+                <div class="btnSubmit">
+                    <input type="submit" class="ingresar" value="Ingresar">
+                    <input type="submit" class="cancelar" value="cancelar">
+                </div>
+            </form>
+            <p class="message">NO VALIDO</p>
+        </div>
+    </div>
+</div>
