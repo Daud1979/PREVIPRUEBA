@@ -1,8 +1,10 @@
 import {getConnection} from '../database/connection.js';
 import sql from 'mssql';
+let result;
+
 export const getEmpresas =async (req,res )=>{
-    //const pool = await getConnection();//funcion await
-   // const result = await pool.request().query('SELECT razonSocial,grupoEmpresarial,CIF,CNAE,descripcionCNAE,ntrabajadorEmpresa,direccionEmpresa,encargadoEmpresa,email,telefono,ciudad,codigopostal,idEmpresa FROM EMPRESA ORDER BY razonSocial'); //consulta sql
+    const pool = await getConnection();//funcion await
+    const result = await pool.request().query('SELECT razonSocial,grupoEmpresarial,CIF,CNAE,descripcionCNAE,ntrabajadorEmpresa,direccionEmpresa,encargadoEmpresa,email,telefono,ciudad,codigopostal,idEmpresa FROM EMPRESA ORDER BY razonSocial'); //consulta sql
     res.render('empresa');
   
 }
@@ -27,14 +29,13 @@ export const postEmpresaSearch = async (req,res)=>{
     //res.render('empresa', { empresas: result.recordset });
 }
 
-
 export const postverificarempresa = async (req,res)=>{
     const pool   = await getConnection();//funcion await
     const { razonsocial,CIF } = req.body;
     const result = await pool.request().input('CIF', sql.VarChar, CIF).input('razonSocial', sql.VarChar, razonsocial).query(`SELECT * FROM EMPRESA WHERE razonSocial=@razonSocial and CIF=@CIF and razonSocial=@razonSocial`); //consulta sql
     res.json(result);//retornamos el resultado en formato json
 }
-let result;
+
 export const postregistrarempresa = async (req, res)=>{
     const pool = await getConnection();
     const {
@@ -94,6 +95,7 @@ export const postregistrarempresa = async (req, res)=>{
          ); SELECT SCOPE_IDENTITY() AS idEmpresa`);
         res.json(result);
 } 
+
 export const updateEmpresa = async (req,res)=>{
     const {atributo,id,valor} = req.body;    
     const pool = await getConnection();
@@ -179,12 +181,14 @@ export const updateEmpresa = async (req,res)=>{
     
     
 }
+
 export const postempresaobtenerempresa = async (req,res)=>{
     const pool   = await getConnection();//funcion await
     const { idEmpresa } = req.body;
     const result = await pool.request().input('idEmpresa', sql.VarChar, idEmpresa).query(`SELECT * FROM EMPRESA WHERE  idEmpresa=@idEmpresa`); //consulta sql
     res.json(result.recordset);//retornamos el resultado en formato json
 }
+
 export const verificarCentro = async (req,res)=>{
     const pool   = await getConnection();//funcion await
     const { razonSocial,CIF,nombreCentro } = req.body;
@@ -196,6 +200,7 @@ export const verificarCentro = async (req,res)=>{
     .query(`SELECT * FROM CENTROSEMPRESAS c inner join EMPRESA e on (c.idEmpresa=e.idEmpresa) WHERE  CIF=@CIF and razonSocial=@razonSocial`); //consulta sql
     res.json(result);//retornamos el resultado en formato json
 }
+
 export const postregistrarCentro = async (req, res)=>{
     const pool = await getConnection();
     const {
@@ -209,7 +214,7 @@ export const postregistrarCentro = async (req, res)=>{
         ntrabajadorCentro,
         idEmpresa
         } =req.body;
-        console.log(req.body);
+        
          const result = await pool.request()
          .input('nombreCentro', sql.VarChar,  nombreCentro)
          .input('encargadoCentro', sql.VarChar,  encargadoCentro)
@@ -245,3 +250,65 @@ export const postregistrarCentro = async (req, res)=>{
         ); SELECT SCOPE_IDENTITY() AS idCentro`);
         res.json(result);
 } 
+
+export const postlistarCentro= async (req,res)=>{
+    const {idEmpresa}=req.body;
+    const pool = await getConnection();
+    const result = await pool.request().input('idEmpresa',sql.Int,idEmpresa).query('select nombreCentro,encargadoCentro,ciudad,codigopostal,direccionCentro,telefonoCentro,emailCentro,ntrabajadorCentro,estado,idCentro from CENTROSEMPRESAS where idEmpresa=@idEmpresa'); //consulta sql
+    res.json(result.recordset);//retornamos el resultado en formato json
+}
+
+export const postupdateCentro = async (req,res)=>{
+    const {atributo,id,valor} = req.body;    
+    
+     const pool = await getConnection();    
+    switch(atributo) {
+         case 'tdnombreCentro_':            
+             result = await pool.request()
+             .input('nombreCentro', sql.VarChar, valor)
+             .input('idCentro', sql.Int, id)
+             .query(`UPDATE CENTROSEMPRESAS SET nombreCentro = @nombreCentro WHERE idCentro = @idCentro`);
+             break;        
+         case 'tdencargadocentro_':
+             result = await pool.request()
+             .input('encargadoCentro', sql.VarChar, valor)
+             .input('idCentro', sql.Int, id)
+             .query(`UPDATE CENTROSEMPRESAS SET encargadoCentro = @encargadoCentro WHERE idCentro = @idCentro`);
+             break;     
+         case 'tdciudadcentro_':
+             result = await pool.request()
+             .input('ciudad', sql.VarChar, valor)
+             .input('idCentro', sql.Int, id)
+             .query(`UPDATE CENTROSEMPRESAS SET ciudad = @ciudad WHERE idCentro = @idCentro`);
+             break;
+         case 'tdcp_':
+             result = await pool.request()
+             .input('codigopostal', sql.VarChar, valor)
+             .input('idCentro', sql.Int, id)
+             .query(`UPDATE CENTROSEMPRESAS SET codigopostal = @codigopostal WHERE idCentro = @idCentro`);
+             break;
+         case 'tddireccioncentro_':
+             result = await pool.request()
+             .input('direccionCentro', sql.VarChar, valor)
+             .input('idCentro', sql.Int, id)
+             .query(`UPDATE CENTROSEMPRESAS SET direccionCentro = @direccionCentro WHERE idCentro = @idCentro`);
+             break;
+         case 'tdtelefonocentro_':
+             result = await pool.request()
+             .input('telefonoCentro', sql.VarChar, valor)
+             .input('idCentro', sql.Int, id)
+             .query(`UPDATE CENTROSEMPRESAS SET telefonoCentro = @telefonoCentro WHERE idCentro = @idCentro`);
+             break;
+         case 'tdemailcentro_':
+             result = await pool.request()
+             .input('emailCentro', sql.VarChar, valor)
+             .input('idCentro', sql.Int, id)
+             .query(`UPDATE CENTROSEMPRESAS SET emailCentro = @emailCentro WHERE idCentro = @idCentro`);
+             break;      
+         default:
+             result ='Error';
+    }
+    res.json(result);           
+    
+    
+}

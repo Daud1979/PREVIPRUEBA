@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {postregistrarCentro,verificarCentro, getEmpresas,getAllEmpresas,postverificarempresa,postregistrarempresa,updateEmpresa,postEmpresaSearch,postempresaobtenerempresa} from '../controllers/empresa.controllers.js'
+import {postupdateCentro,postlistarCentro,postregistrarCentro,verificarCentro, getEmpresas,getAllEmpresas,postverificarempresa,postregistrarempresa,updateEmpresa,postEmpresaSearch,postempresaobtenerempresa} from '../controllers/empresa.controllers.js'
 const router = Router();
 //selecionamos todas las empresas
 router.get('/empresas',getEmpresas);
@@ -22,4 +22,6 @@ router.post('/updateEmpresa',updateEmpresa);
 /*aqui lo de centro*/
 router.post('/verificarcentro',verificarCentro);
 router.post('/registrarcentro',postregistrarCentro);
+router.post('/listarcentro',postlistarCentro);
+router.post('/updateCentro',postupdateCentro);
 export default router;

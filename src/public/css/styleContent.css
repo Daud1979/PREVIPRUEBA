@@ -129,19 +129,19 @@ li a:hover{
 .confirm{
     color:white;
     text-shadow: 5px 0 15px rgba(27, 38, 122, 1);  
-    font-size: 1..1rem;
+    font-size: 1.1rem;
 }
 
 .confirmlbl{
     color:white;
     background:#4057FB;
     font-size: 1.3rem;
-    position: absolute;
-    
-    right: 50%;
+    position: absolute;    
+    left: 50%;
     top: 50%;
     text-align: center;
     width:400px;
+    transform: translate(-50%, -50%);
     
 }
 .alertlbl{
@@ -149,13 +149,11 @@ li a:hover{
     background:#e70606;
     font-size: 1.3rem;
     position: absolute;
-    width: 400px;
-   
-    right: 50%;
+    width: 400px;   
+    left:  50%;
     top: 50%;
     text-align: center;
-   
-
+    transform: translate(-50%, -50%);
 }
 .btnInput input{
     padding: 6px 15px;
@@ -210,7 +208,7 @@ li a:hover{
 .listEmpresa{
     margin-top: 0.2rem;
     border-radius: 5px;
-    height:78vh;
+    height:90%;
     width: 100%;        
     display: flex;
     flex-direction: column;
@@ -219,7 +217,7 @@ li a:hover{
 .headLista{
     background: rgb(192, 190, 190);
     border-radius: 5px;  
-    height: 7%;
+    height: 10%;
 
 }
 .headLista input{
@@ -291,17 +289,68 @@ li a:hover{
   border: none;
 }
  .containerCentros{    
-    display: none;
+    display: none;    
 }
- .containerCentrosSi{
-    background: rgb(139, 139, 139);
+.containerCentrosSi{
+    background: rgb(255, 255, 255);
     position: absolute;
-    top: 40%;
+    top: 57%;
     left: 50%;
     width: 100%;
-    height: 70%;
+    height: 100vh;
     transform: translate(-50%, -50%);
     display: block;
+    border-radius: 5px;
 } 
+.listaCentros{
+    background: rgb(192, 190, 190);
+    border-radius: 5px;
+    margin-top: 1px;
+}
+.listaCentros h4{
+    margin-bottom: 0.5rem 0;
+    text-shadow: 5px 0 15px rgba(250, 248, 248, 1); 
+    color: rgb(0, 0, 0); 
+    text-align: center;
+}
+.listaCentro{
+    overflow-x: scroll;
+    width: 100%;
+    height: 100vh;  
+    
+}
+#tablaCentro{
+    width: 100%;    
+    background: white;  
+}
 
+#tablaCentro thead{
+    background: #131313;
+    color:white;
+    border-color: 1px solid white;    
+}
+#tablaCentro td{
+    border: 1px solid rgb(192, 190, 190);
+    background: white;
+    padding-left: 5px;
+    height: 20px;
+}
+.centrarfila{  
+    align-items: start;
+    background: #d6d5d5;   
+}
+.centrarfila:hover{
+    color: #4057FB;
+    cursor: pointer;}
 
+#colTrabajadoreCentro{
+    width: 150px;
+}
+#tdcp_{
+    text-align: end;
+    padding-right: 5px;
+}
+#tdtelefonocentro_{
+    text-align: end;
+    padding-right: 5px;
+}
