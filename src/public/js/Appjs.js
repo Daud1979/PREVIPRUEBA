@@ -3,6 +3,24 @@ document.addEventListener("DOMContentLoaded", function() {
     inputs.forEach(function(input) {
         input.setAttribute("autocomplete", "off");
     });
+    const data= {search:inputBuscarEmpresa.value};   
+    fetch('/search', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {      
+       tablabody.innerHTML='';
+       data.forEach(item => {        
+        cargartablaEmpresa(item);
+    });
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+});
 });
 /*AQUI EL  REGISTRO DE EMPRESAS*/
 btnRegistro = document.querySelector('#registrarEmpresa');
@@ -21,6 +39,12 @@ txtemailempresa  = document.querySelector('#emailempresa');
 txtntrabajadoresempresa = document.querySelector('#ntrabajadoresempresa');
 txttelefonoempresa = document.querySelector('#telefonoempresa');
 txtmessage = document.querySelector('#message');
+lblupdateEmpresa = document.querySelector('#updatelblEmpresa');
+inputBuscarEmpresa = document.querySelector('#buscarempresa');
+tablabody = document.querySelector('#tbody');
+
+let valorcelda='';
+
 btnRegistro.addEventListener('click', ()=>{
     txtmessage.textContent='';
     if (txtrazonSocial.value != '' && txtCIF.value != '' && txtgrupoempresarial.value != '' && txtCNAE.value != '' && txtdescripcionCNAE.value != '' && txtciudad.value != '' && txtcodigopostal.value != '' && txtdireccionempresa.value != '' && txtencargado.value != ''  && txtemailempresa.value != '' && txtntrabajadoresempresa.value != '' && txttelefonoempresa.value != '')
@@ -63,7 +87,9 @@ btnRegistro.addEventListener('click', ()=>{
                         txtmessage.classList.remove('alert');
                         txtmessage.textContent =`SE REGISTRO CORRECTAMENTE A LA BASE DE DATOS`;
                         txtmessage.classList.add('confirm');
-                        console.log(data);
+                        location.reload(true);
+
+                        
                     }).catch((error) => {
                         console.error('Error:', error);
                     });
@@ -72,8 +98,9 @@ btnRegistro.addEventListener('click', ()=>{
                 else
                 {
                     txtmessage.classList.remove('confirm');
-                    txtmessage.textContent =`LA EMPRESA YA SE ENCUENTRA REGISTRADA EN LA BASE DE DATOS`;
                     txtmessage.classList.add('alert');
+                    txtmessage.textContent =`LA EMPRESA YA SE ENCUENTRA REGISTRADA EN LA BASE DE DATOS`;
+                    ocultarLabel(txtmessage);       
                 }
             })
             .catch((error) => {
@@ -82,13 +109,16 @@ btnRegistro.addEventListener('click', ()=>{
     }
     else{
         txtmessage.classList.remove('confirm');
-        txtmessage.textContent=`SE REQUIEREN DATOS PARA EL REGISTRO`;
         txtmessage.classList.add('alert');
+        txtmessage.textContent=`SE REQUIEREN DATOS PARA EL REGISTRO`;                  
+        ocultarLabel(txtmessage);       
+        
     }
     
     
 });
 btnCancelar.addEventListener('click',limpiarRegistroEmpresa);
+
 function limpiarRegistroEmpresa(){
     txtrazonSocial.value='';
     txtCIF.value='';
@@ -104,4 +134,347 @@ function limpiarRegistroEmpresa(){
     txttelefonoempresa.value='';
     txtmessage.textContent='';
 }
-/*FIN REGISTRO EMPRESA*/
+
+
+function updateEmpresa(atributo,id,valor){
+        const data= {atributo,id,valor};
+        fetch('/updateEmpresa', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.rowsAffected){
+                lblupdateEmpresa.classList.remove('alertlbl');
+                updatelblEmpresa.textContent=`SE REALIZO LA MODIFICACION`;
+                lblupdateEmpresa.classList.add('confirmlbl');
+            }
+            else
+            {
+                lblupdateEmpresa.classList.add('confirmlbl');
+                lblupdateEmpresa.textContent=`NO SE PUDO REALIZAR LA MODIFICACION`;                         
+                lblupdateEmpresa.classList.remove('alertlbl');
+            }
+            ocultarLabel(lblupdateEmpresa);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+    });
+}
+
+function ocultarLabel(lblcambio) {
+    const lbl=lblcambio;
+    setTimeout(() => {
+        lbl.classList.remove('alertlbl');
+        lbl.classList.remove('confirmtlbl');      
+        lbl.classList.remove('alert'); 
+        lbl.textContent='';
+    }, 1500); // 3 segundos
+}
+
+
+$(document).on("blur","#tbody td[data-id]",function(event){  
+    let valor=this.innerHTML;    
+    
+    let id =event.currentTarget.dataset.id;  //obtener el valor del data-id    
+    if (valor != valorcelda)
+    {
+        if (valor!='')
+        {        
+            updateEmpresa(event.currentTarget.id,id,valor);
+        }
+        else
+        {
+            lblupdateEmpresa.classList.remove('confirmlbl');
+            lblupdateEmpresa.textContent=`DATOS NO VALIDOS`;                
+            lblupdateEmpresa.classList.add('alertlbl');
+            this.innerHTML=valorcelda;
+            ocultarLabel(lblupdateEmpresa);
+        }
+    }
+    else{
+        this.innerHTML=valorcelda;
+    }
+
+});
+
+
+inputBuscarEmpresa.addEventListener('keyup',()=>{   
+    const data= {search:inputBuscarEmpresa.value};   
+    fetch('/search', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {      
+       tablabody.innerHTML='';
+       data.forEach(item => {        
+        cargartablaEmpresa(item);
+    });
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+});
+
+});
+razonsocialCentro = document.querySelector('#razonsocialCentro');
+CIFCentro = document.querySelector('#CIFCentro');
+let nidEmpresa=0;
+const centro = document.querySelector('#listaCentros'); 
+
+function MostrarCentro(idEmpresa)
+{ 
+    nidEmpresa=idEmpresa;
+    const data= {idEmpresa};
+    fetch('/empresas/obtener', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        razonsocialCentro.value = data[0].razonSocial; 
+        CIFCentro.value=data[0].CIF;
+        razonsocialCentro.classList.add('blanco');
+        CIFCentro.classList.add('blanco');
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+    const containerCentros = 'containerCentros';
+    const containerCentrosSi = 'containerCentrosSi';    
+    centro.classList.remove(containerCentros);
+    centro.classList.add(containerCentrosSi);  
+   
+}
+
+centro.addEventListener('keydown', function(event) {
+    console.log(event.key);
+    if (event.key === 'Escape') {
+
+        const containerCentros = 'containerCentros';
+        const containerCentrosSi = 'containerCentrosSi';    
+        centro.classList.add(containerCentros);
+        centro.classList.remove(containerCentrosSi);
+    }
+});
+
+function cargartablaEmpresa(item){
+  //aqui es el cargar
+    const fila = tablabody.insertRow();//se crea una nueva fila           
+    const CIF_ = fila.insertCell(0);//primer columna
+    const tdrazonSocial_= fila.insertCell(1);//primer columna
+    const tdgrupoEmpresarial_= fila.insertCell(2);//primer columna
+    const tdCNAE_= fila.insertCell(3);//primer columna
+    const tddescripcionCNAE_= fila.insertCell(4);//primer columna
+    const tdntrabajadorEmpresa_= fila.insertCell(5);//primer columna
+    const tddireccionEmpresa_= fila.insertCell(6);//primer columna
+    const tdencargadoEmpresa_= fila.insertCell(7);//primer columna
+    const tdemail_= fila.insertCell(8);//primer columna
+    const tdtelefono_= fila.insertCell(9);//primer columna
+    const tdciudad_= fila.insertCell(10);//primer columna
+    const tdcodigopostal_= fila.insertCell(11);//primer columna
+    const tdbutton_= fila.insertCell(12);//botones
+    let btnCentros = document.createElement("button")
+    let btnTrabajador = document.createElement("button");
+    let btndatos =document.createElement("button");
+    btnCentros.innerHTML=` <span class="material-symbols-outlined homework">  home_work </span>`;
+    btnCentros.id = item.idEmpresa;
+    tdbutton_.appendChild(btnCentros);
+    btnCentros.addEventListener("click", () => {
+        MostrarCentro(btnCentros.id);
+  });
+
+  btnTrabajador.innerHTML = `<span class="material-symbols-outlined personapron">person_apron </span>`;
+  tdbutton_.appendChild(btnTrabajador);
+ 
+  btndatos.innerHTML=`  <span class="material-symbols-outlined gridview">grid_view</span>`;
+  tdbutton_.appendChild(btndatos);
+  tdbutton_.classList.add('btncentro');
+ 
+  //
+  CIF_.setAttribute('data-id', item.idEmpresa);
+  CIF_.id =`tdCIF`;
+  CIF_.contentEditable = true;
+  CIF_.textContent = item.CIF;  
+  // //
+  tdrazonSocial_.setAttribute('data-id', item.idEmpresa);
+  tdrazonSocial_.id =`tdrazonSocial`;
+  tdrazonSocial_.contentEditable = true;
+  tdrazonSocial_.textContent = item.razonSocial;  
+  // //
+  tdgrupoEmpresarial_.setAttribute('data-id', item.idEmpresa);
+  tdgrupoEmpresarial_.id =`tdgrupoEmpresarial`;
+  tdgrupoEmpresarial_.contentEditable = true;
+  tdgrupoEmpresarial_.textContent = item.grupoEmpresarial;  
+  //
+  tdCNAE_.setAttribute('data-id', item.idEmpresa);
+  tdCNAE_.id =`tdCNAE`;
+  tdCNAE_.contentEditable = true;
+  tdCNAE_.textContent = item.CNAE;  
+  //
+  tddescripcionCNAE_.setAttribute('data-id', item.idEmpresa);
+  tddescripcionCNAE_.id =`tddescripcionCNAE`;
+  tddescripcionCNAE_.contentEditable = true;
+  tddescripcionCNAE_.textContent = item.descripcionCNAE;  
+  //
+  tdntrabajadorEmpresa_.setAttribute('data-id', item.idEmpresa);
+  tdntrabajadorEmpresa_.id =`tdntrabajadorEmpresa`;
+  tdntrabajadorEmpresa_.contentEditable = true;
+  tdntrabajadorEmpresa_.textContent = item.ntrabajadorEmpresa;  
+  tdntrabajadorEmpresa_.classList.add('celdaizq');
+  //        
+  tdencargadoEmpresa_.setAttribute('data-id', item.idEmpresa);
+  tdencargadoEmpresa_.id =`tdencargadoEmpresa`;
+  tdencargadoEmpresa_.contentEditable = true;
+  tdencargadoEmpresa_.textContent = item.encargadoEmpresa;  
+  //
+  tddireccionEmpresa_.setAttribute('data-id', item.idEmpresa);
+  tddireccionEmpresa_.id =`tddireccionEmpresa`;
+  tddireccionEmpresa_.contentEditable = true;
+  tddireccionEmpresa_.textContent = item.direccionEmpresa;  
+  //
+  tdemail_.setAttribute('data-id', item.idEmpresa);
+  tdemail_.id =`tdemail`;
+  tdemail_.contentEditable = true;
+  tdemail_.textContent = item.email;  
+  //
+  tdtelefono_.setAttribute('data-id', item.idEmpresa);
+  tdtelefono_.id =`tdtelefono`;
+  tdtelefono_.contentEditable = true;
+  tdtelefono_.textContent = item.telefono;  
+  tdtelefono_.classList.add('celdaizq');
+  //
+  tdciudad_.setAttribute('data-id', item.idEmpresa);
+  tdciudad_.id =`tdciudad`;
+  tdciudad_.contentEditable = true;
+  tdciudad_.textContent = item.ciudad;  
+  //
+  tdcodigopostal_.setAttribute('data-id', item.idEmpresa);
+  tdcodigopostal_.id =`tdcodigopostal`;
+  tdcodigopostal_.contentEditable = true;
+  tdcodigopostal_.textContent = item.codigopostal;  
+  tdcodigopostal_.classList.add('celdaizq');
+  //
+
+//fin cargar
+}
+
+btnCancelarCentro = document.querySelector('#cancelarCentro');
+btnCancelarCentro.addEventListener('click',()=>{    
+       
+        const containerCentros = 'containerCentros';
+        const containerCentrosSi = 'containerCentrosSi';    
+        centro.classList.add(containerCentros);
+        centro.classList.remove(containerCentrosSi);
+});
+//no funciona por el id verificar
+function getEmpresaCentro(id){
+    console.log(id.value);
+    const data= {id};
+    fetch('/empresas/obtener', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.rowsAffected);        
+       
+       
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+});
+}
+btnRegistroCentro = document.querySelector('#registrarCentro');
+
+CIFCentro = document.querySelector('#CIFCentro');
+razonsocialCentro = document.querySelector('#razonsocialCentro');
+nombreCentro = document.querySelector('#nombreCentro');
+encargadoCentro = document.querySelector('#encargadoCentro');
+ciudadCentro = document.querySelector('#ciudadCentro');
+telefonoCentro = document.querySelector('#telefonoCentro');
+codigopostalCentro = document.querySelector('#codigopostalCentro');
+direccionCentro = document.querySelector('#direccionCentro');
+emailCentro = document.querySelector('#emailCentro');
+ntrabajadorCentro = document.querySelector('#ntrabajadorCentro');
+
+btnRegistroCentro.addEventListener('click', ()=>{
+    
+    //txtmessage.textContent='';//hay que crear
+    if (nombreCentro.value != '' && encargadoCentro.value != '' && ciudadCentro .value != '' && telefonoCentro.value != '' && codigopostalCentro.value != '' && direccionCentro.value != ''  && emailCentro.value != '' && ntrabajadorCentro.value != '')
+    {
+        const dataVerificar = {nombreCentro:nombreCentro.value, CIF:CIFCentro.value, razonsocial:razonsocialCentro.value };        
+       
+        const data = {
+            nombreCentro : nombreCentro.value,
+            encargadoCentro : encargadoCentro.value,
+            ciudadCentro : ciudadCentro.value,
+            telefonoCentro :  telefonoCentro.value,
+            codigopostalCentro : codigopostalCentro.value,
+            direccionCentro :  direccionCentro.value,
+            emailCentro : emailCentro.value,
+            ntrabajadorCentro : ntrabajadorCentro.value,
+            idEmpresa:nidEmpresa
+            };   
+            fetch('/verificarcentro', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataVerificar)
+            })
+            .then(response => response.json())
+            .then(dataVerificar => {
+                if (dataVerificar.rowsAffected==0)
+                {
+                    //registrar empresa
+                    fetch('/registrarcentro',{
+                        method:'POST',
+                        headers:{
+                            'Content-Type':'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    }).then(response=>response.json()).then(data=>{
+                        limpiarRegistroEmpresa();
+                        // txtmessage.classList.remove('alert');
+                        // txtmessage.textContent =`SE REGISTRO CORRECTAMENTE A LA BASE DE DATOS`;
+                        // txtmessage.classList.add('confirm');
+                        // location.reload(true);
+                            console.log(data);
+                        
+                    }).catch((error) => {
+                        console.error('Error:', error);
+                    });
+                    //registrar empresa
+                }
+                else
+                {
+                    // txtmessage.classList.remove('confirm');
+                    // txtmessage.textContent =`LA EMPRESA YA SE ENCUENTRA REGISTRADA EN LA BASE DE DATOS`;
+                    // txtmessage.classList.add('alert');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+        });
+    }
+    else{
+        // txtmessage.classList.remove('confirm');
+        // txtmessage.textContent=`SE REQUIEREN DATOS PARA EL REGISTRO`;
+        // txtmessage.classList.add('alert');
+    }
+    
+    
+});

@@ -390,7 +390,7 @@ li a:hover{
 .session{    
     background: rgb(255, 254, 254,0.4);
     border: white 1px solid;
-    max-width: 250px;
+    max-width: 280px;
     margin: 0 auto;
     margin-top: 2rem;
     border-radius: 2rem;
@@ -426,6 +426,8 @@ li a:hover{
     font-size: 1rem;
     border-radius: 5px;
     padding-left: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
     outline: none;    
 }
 .btnSubmit{

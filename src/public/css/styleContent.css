@@ -57,6 +57,7 @@ li a:hover{
     width: 95%;
     height: 87vh;    
     margin: 0 auto;
+    position: relative;
 }
 .empresas{
     width: 100%;
@@ -66,9 +67,10 @@ li a:hover{
 .headEmpresa{
     background:#353535;
     border-radius: 5px;
-    height: 25%;
+    height:auto;
     width: 100%;
-    text-align: center;   
+    text-align: center;  
+    padding: 0.5rem 0; 
 }
 .headEmpresa h4{
     padding-top: 1rem;
@@ -108,27 +110,52 @@ li a:hover{
 }
 .btnInput{
     width: 98%;
-    text-align: end;
-    
+    text-align: end;    
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 0 auto;
-   
+    margin: 0 auto;   
 }
 .button{
     margin: auto 0;
    
 }
 .alert{
-    color: red;
-    font-size: 1.5rem;
+    background: red;
+    color:white;
+    font-size: 1.1rem;
     text-shadow: 5px 0 15px rgba(255, 255, 255, 0.1);  
 }
 .confirm{
     color:white;
     text-shadow: 5px 0 15px rgba(27, 38, 122, 1);  
-    font-size: 1.5rem;
+    font-size: 1..1rem;
+}
+
+.confirmlbl{
+    color:white;
+    background:#4057FB;
+    font-size: 1.3rem;
+    position: absolute;
+    
+    right: 50%;
+    top: 50%;
+    text-align: center;
+    width:400px;
+    
+}
+.alertlbl{
+    color:white;
+    background:#e70606;
+    font-size: 1.3rem;
+    position: absolute;
+    width: 400px;
+   
+    right: 50%;
+    top: 50%;
+    text-align: center;
+   
+
 }
 .btnInput input{
     padding: 6px 15px;
@@ -138,11 +165,21 @@ li a:hover{
     border: none;
     font-size: 1rem;
 }
+.btncentro{
+    text-align: center;
+}
+.celdaizq{
+    text-align: end;
+    padding-right: 5px;
+}
 .btnInput input:hover{
     background:#4057FB;
     color: white;
     outline: white;
     border-color: 1px solid white;
+}
+.blanco{
+    background: #e7e5e5;
 }
 #CNAE{
     width: 100px;
@@ -159,12 +196,21 @@ li a:hover{
 #telefonoempresa{
     width: 120px;
 }
+#ntrabajadorCentro{
+    width: 60px;
+}
+#codigopostalCentro{
+    width: 80px;
+}
+#telefonoCentro{
+    width: 120px;
+}
 
 /*LISTA DE EMPRESA*/
 .listEmpresa{
     margin-top: 0.2rem;
     border-radius: 5px;
-    height: 65vh;
+    height:78vh;
     width: 100%;        
     display: flex;
     flex-direction: column;
@@ -172,7 +218,9 @@ li a:hover{
 }
 .headLista{
     background: rgb(192, 190, 190);
-    border-radius: 5px;    
+    border-radius: 5px;  
+    height: 7%;
+
 }
 .headLista input{
     padding: 0.2rem;
@@ -197,7 +245,7 @@ li a:hover{
 }
 
 .tablaEmpresaScroll{
-    overflow: scroll;
+    overflow-x: scroll;
     width: 100%;
     height: 100%;
 }
@@ -208,8 +256,24 @@ li a:hover{
 }
 #tablaEmpresa td{
     border: 1px solid rgb(192, 190, 190);
-    background: rgb(236, 236, 236);
+    background: white;
 }
+#tbody button{
+    cursor: pointer;
+}
+ td{
+    transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+}
+ td:focus{
+    background: #0d0d0e;
+    color: #4057FB;
+    transform: translateY(10px) translateX(20px) rotateX(360deg);   
+    font-size: 1.5rem;
+}
+
 .homework{
     color: green;
 }
@@ -219,3 +283,25 @@ li a:hover{
 .gridview{
     color: rgb(87, 87, 82);
 }
+#tablaEmpresa td:last-child{
+    width: 95px;
+    background: #F0F0F0;
+}
+#tablaEmpresa td:last-child button{
+  border: none;
+}
+ .containerCentros{    
+    display: none;
+}
+ .containerCentrosSi{
+    background: rgb(139, 139, 139);
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 100%;
+    height: 70%;
+    transform: translate(-50%, -50%);
+    display: block;
+} 
+
+
