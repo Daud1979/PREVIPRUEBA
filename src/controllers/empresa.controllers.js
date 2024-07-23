@@ -29,6 +29,15 @@ export const postEmpresaSearch = async (req,res)=>{
     //res.render('empresa', { empresas: result.recordset });
 }
 
+export const postsearchTrabajador = async (req,res)=>{
+    const pool = await getConnection();//funcion await
+    const {search,idEmpresa} = req.body;     
+    const result = await pool.request()
+    .input('search',sql.VarChar,search)
+    .input('idEmpresa',sql.Int,idEmpresa)
+    .query(`select  RANK() OVER (PARTITION BY ce.idCentro ORDER BY idTrabajador) AS n,NIF,nombres,apellidos,email,telefono,fechaAlta=CONVERT(VARCHAR, fechaAlta, 23),ce.nombreCentro,Estado=CASE WHEN te.Estado='H' THEN 'Habilitado' else 'Deshabilitado' end,idTrabajador from TRABAJADOREMPRESAS te inner join CENTROSEMPRESAS ce on (te.idCentro=ce.idCentro) where ce.idEmpresa=@idEmpresa and ( NIF LIKE '%' + @search + '%' OR nombres LIKE '%' + @search + '%' OR apellidos LIKE '%' + @search + '%' OR nombreCentro LIKE '%' + @search + '%' ) order by ce.idCentro`); //consulta sql
+    res.json(result.recordset);
+}
 export const postverificarempresa = async (req,res)=>{
     const pool   = await getConnection();//funcion await
     const { razonsocial,CIF } = req.body;
@@ -121,9 +130,10 @@ export const updateEmpresa = async (req,res)=>{
             .query(`UPDATE EMPRESA SET grupoEmpresarial = @grupoEmpresarial WHERE idEmpresa = @idEmpresa`);
             break;
         case 'tdntrabajadorEmpresa':
+            
             result = await pool.request()
             .input('ntrabajadorEmpresa', sql.Int, valor)
-            .input('idEmpresa', sql.VarChar, id)
+            .input('idEmpresa', sql.Int, id)
             .query(`UPDATE EMPRESA SET ntrabajadorEmpresa = @ntrabajadorEmpresa WHERE idEmpresa = @idEmpresa`);
             break;
         case 'tdCNAE':
@@ -258,10 +268,16 @@ export const postlistarCentro= async (req,res)=>{
     res.json(result.recordset);//retornamos el resultado en formato json
 }
 
+export const postlistartrabajador = async (req,res)=>{
+    const {idEmpresa}=req.body;
+    const pool = await getConnection();
+    const result = await pool.request().input('idEmpresa',sql.Int,idEmpresa).query(`select  RANK() OVER (PARTITION BY ce.idCentro ORDER BY idTrabajador) AS n,NIF,nombres,apellidos,email,telefono,fechaAlta=CONVERT(VARCHAR, fechaAlta, 23),ce.nombreCentro,Estado=CASE WHEN te.Estado='H' THEN 'Habilitado' else 'Deshabilitado' end,idTrabajador from TRABAJADOREMPRESAS te inner join CENTROSEMPRESAS ce on (te.idCentro=ce.idCentro) where ce.idEmpresa=@idEmpresa order by ce.idCentro`); //consulta sql
+    res.json(result.recordset);//retornamos el resultado en formato json
+}
+
 export const postupdateCentro = async (req,res)=>{
-    const {atributo,id,valor} = req.body;    
-    
-     const pool = await getConnection();    
+    const {atributo,id,valor} = req.body;     
+    const pool = await getConnection();    
     switch(atributo) {
          case 'tdnombreCentro_':            
              result = await pool.request()
@@ -308,7 +324,104 @@ export const postupdateCentro = async (req,res)=>{
          default:
              result ='Error';
     }
-    res.json(result);           
-    
-    
+    res.json(result);     
+}
+
+export const postverificartrabajador = async (req,res)=>{
+    const pool   = await getConnection();//funcion await
+    const { idCentro,nif } = req.body;    
+    const result = await pool.request()
+    .input('nif',sql.VarChar,nif)
+    .input('idCentro', sql.VarChar, idCentro)    
+    .query(`select * from TRABAJADOREMPRESAS where idCentro=@idCentro and NIF=@nif`); //consulta sql
+    res.json(result);//retornamos el resultado en formato json
+}
+
+export const postregistrartrabajador = async (req, res)=>{
+    const pool = await getConnection();
+    console.log(req.body);
+    const {
+        nif ,
+        nombres ,
+        apellidos ,
+        telefono ,
+        email ,
+        idCentro  
+        } =req.body;
+        const result = await pool.request()
+        .input('nif', sql.VarChar,  nif)
+        .input('nombres', sql.VarChar,  nombres)
+        .input('apellidos', sql.VarChar, apellidos)
+        .input('telefono', sql.VarChar, telefono)
+        .input('email', sql.VarChar, email)
+        .input('idCentro', sql.Int,idCentro)            
+        .query(`INSERT INTO TRABAJADOREMPRESAS ( 
+        NIF,
+        nombres,
+        apellidos,
+        email,  
+        telefono,
+        fechaAlta,
+        idCentro,
+        estado        
+        ) VALUES (
+        ltrim(rtrim(@nif)),
+        ltrim(rtrim(@nombres)),
+        ltrim(rtrim(@apellidos)),
+        ltrim(rtrim(@email)),
+        ltrim(rtrim(@telefono)),
+        getdate(),
+        ltrim(rtrim(@idCentro)),
+        'H')   
+        `);
+        res.json(result);
+} 
+
+export const postupdateTrabajador = async (req, res) =>{
+    const {atributo,id,valor} = req.body;    
+    const pool = await getConnection();    
+    switch(atributo) {
+         case 'tdnif_':            
+             result = await pool.request()
+             .input('NIF', sql.VarChar, valor)
+             .input('idTrabajador', sql.Int, id)
+             .query(`UPDATE TRABAJADOREMPRESAS SET NIF = @NIF WHERE idTrabajador = @idTrabajador`);
+             break;        
+         case 'tdnombre_':
+             result = await pool.request()
+             .input('nombres', sql.VarChar, valor)
+             .input('idTrabajador', sql.Int, id)
+             .query(`UPDATE TRABAJADOREMPRESAS SET nombres = @nombres WHERE idTrabajador = @idTrabajador`);
+             break;     
+         case 'tdapellidos_':
+             result = await pool.request()
+             .input('apellidos', sql.VarChar, valor)
+             .input('idTrabajador', sql.Int, id)
+             .query(`UPDATE TRABAJADOREMPRESAS SET apellidos = @apellidos WHERE idTrabajador = @idTrabajador`);
+             break;
+         case 'tdemail_':
+             result = await pool.request()
+             .input('email', sql.VarChar, valor)
+             .input('idTrabajador', sql.Int, id)
+             .query(`UPDATE TRABAJADOREMPRESAS SET email = @email WHERE idTrabajador = @idTrabajador`);
+             break;
+         case 'tdtelefono_':
+             result = await pool.request()
+             .input('telefono', sql.VarChar, valor)
+             .input('idTrabajador', sql.Int, id)
+             .query(`UPDATE TRABAJADOREMPRESAS SET telefono = @telefono WHERE idTrabajador = @idTrabajador`);
+             break;            
+         default:
+             result ='Error';
+    }
+    res.json(result);  
+}
+
+export const postlistartrabajadorcentro = async (req,res)=>{
+    const {idCentro}=req.body;
+    const pool = await getConnection();
+    const result = await pool.request()
+    .input('idCentro',sql.Int,idCentro)
+    .query(`select ROW_NUMBER() OVER( ORDER BY idTrabajador) AS n,NIF,nombres,apellidos,telefono from TRABAJADOREMPRESAS where idCentro=@idCentro`); //consulta sql
+    res.json(result.recordset);//retornamos el resultado en formato json
 }

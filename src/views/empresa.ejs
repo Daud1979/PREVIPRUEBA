@@ -195,7 +195,7 @@
                             <th>Telefono</th>
                             <th>Email</th>
                             <th id="colTrabajadoreCentro">Trabajadores</th>                             
-                           
+                            <th>Opcion</th>          
                         </tr>
                     </thead>
                     <tbody id="tbodyC">                  
@@ -205,8 +205,117 @@
             </div>
         </div>
         <label id="updatelblCentro" ></label>
+        <div class="containerCentroTrabajadores">
+            <div class="centrolistaTrabajadores">
+                <h4 style="text-align: center;">LISTA DE TRABAJADORES</h4>
+                <div class="listaCentroTrabajadores">
+                    <table id="tablaCentro">
+                        <thead>
+                            <tr>
+                                <th>Nº</th>
+                                <th>NIF</th>
+                                <th>Nombre</th>
+                                <th>Apellidos</th>
+                                <th>Telefono</th>                               
+                            </tr>
+                        </thead>
+                        <tbody id="tbodyCT">                  
+                        
+                        </tbody>
+                    </table>
+                </div>
+                <button id="btnCerrarCentroTrabajador">Cerrar Ventana</button>
+            </div>
+            
+        </div>
     </div>
   <!--FIN CENTROS-->
-  <!--USUARIOS-->
-  <!--FIN USUARIOS-->
+  <!--TRABAJADORES-->
+  <div id="listaUsuarios" class="containerCentros">
+    <div class="headEmpresa">
+        <h4>GESTION DE TRABAJADORES DE EMPRESA</h4>
+        <form ><!--,,,,,,,-->
+            <div class="formEmpresa">
+                <div class="rowlabelinput">
+                    <div class="labelinput">                    
+                        <label for="">Razon Social</label>                    
+                        <input type="text" disabled id="razonsocialTrabajador" name="razonsocialTrabajador" >
+                    </div>
+                    <div class="labelinput">                    
+                        <label for="">CIF</label>                    
+                        <input type="text"  disabled id="CIFTrabajador" name="CIFTrabajador" >                  
+                    </div>                                        
+                </div> 
+                <div class="rowlabelinput">
+                    <div class="labelinput">
+                        <label for="centro">Lista de Centros</label>
+                        <select id="cmbcentro" name="cmbcentro" > </select>
+                    </div> 
+                    <div class="labelinput">
+                        <label for="nifnie">NIF/NIE</label>
+                        <input type="text" id="nifnie" name="nifnie" >
+                    </div>  
+                </div>
+                <div class="rowlabelinput"> 
+                    <div class="labelinput">
+                        <label for="nombreTrabajador">Nombre</label>
+                        <input type="text" id="nombreTrabajador" name="nombreTrabajador" >
+                    </div>
+                    <div class="labelinput">
+                        <label for="apellidosTrabajador">Apellidos</label>
+                        <input type="text" id="apellidosTrabajador" name="apellidosTrabajador" >
+                    </div>                   
+                </div>
+              
+                <div class="rowlabelinput">
+                    <div class="labelinput">
+                        <label for="telefonoTrabajador">Telefono</label>
+                        <input type="number" id="telefonoTrabajador" name="telefonoTrabajador" >
+                    </div>
+                    <div class="labelinput">
+                        <label for="emailTrabajador">Email Trabajador</label>
+                        <input id="emailTrabajador" required name="emailTrabajador" >
+                    </div>                          
+                </div>               
+            </div>
+            <div class="btnInput">
+                <label id="messageTrabajador" for=""></label>
+                <div class="button">
+                    <input type="button" name="registrarTrabajador" id="registrarTrabajador" value="Registrar">
+                    <input type="button" name="cancelarTrabajador" id="cancelarTrabajador" value="Cancelar">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="listaCentros">
+        <div class="headLista">
+            <h4>LISTA DE TRABAJADORES EN TODA LA EMPRESA</h4>
+            <input type="text" name="buscartrabajador" id="buscartrabajador" placeholder="Escriba el dni, nombre, apellido, centro">
+        </div>
+        <div class="listaCentro">
+            <table id="tablaTrabajador">
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Centro</th>
+                        <th>NIF</th>
+                        <th>Nombre</th>
+                        <th>Apellidos</th>
+                        <th>Email</th>
+                        <th>Telefono</th>
+                        <th>Alta</th>
+                        <th>Estado</th>  
+                        <th>Opciones</th>                     
+                    </tr>
+                </thead>
+                <tbody id="tbodyT">                  
+                
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <label id="updatelblTrabajador" ></label>
+   
+</div>
+  <!--FIN TRABAJADORES-->
 </div>

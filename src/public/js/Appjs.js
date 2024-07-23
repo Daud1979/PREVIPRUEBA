@@ -1,3 +1,67 @@
+
+/*AQUI EL  REGISTRO DE EMPRESAS*/
+btnRegistro = document.querySelector('#registrarEmpresa');
+btnCancelar = document.querySelector('#cancelarEmpresa');
+txtrazonSocial=document.querySelector('#razonsocial');
+txtCIF=document.querySelector('#CIF');
+txtgrupoempresarial = document.querySelector('#grupoempresarial');
+txtCNAE= document.querySelector('#CNAE');
+txtdescripcionCNAE = document.querySelector('#descripcionCNAE');
+txtciudad  = document.querySelector('#ciudad');
+txtcodigopostal  = document.querySelector('#codigopostal');
+txtdireccionempresa = document.querySelector('#direccionempresa');
+txtencargado = document.querySelector('#encargado');
+txtemailempresa  = document.querySelector('#emailempresa');
+txtntrabajadoresempresa = document.querySelector('#ntrabajadoresempresa');
+txttelefonoempresa = document.querySelector('#telefonoempresa');
+txtmessage = document.querySelector('#message');
+lblupdateEmpresa = document.querySelector('#updatelblEmpresa');
+inputBuscarEmpresa = document.querySelector('#buscarempresa');
+inputBuscarTrabajador = document.querySelector('#buscartrabajador');
+tablabody = document.querySelector('#tbody');
+tablaEmpresa = document.querySelector('#tablaEmpresa');
+razonsocialCentro = document.querySelector('#razonsocialCentro');
+CIFCentro = document.querySelector('#CIFCentro');
+nidEmpresa=0;
+razonsocialTrabajador = document.querySelector('#razonsocialTrabajador');
+CIFTrabajador = document.querySelector('#CIFTrabajador');
+cmbcentro = document.querySelector('#cmbcentro');
+centro = document.querySelector('#listaCentros'); 
+trabajador = document.querySelector('#listaUsuarios');
+btnCancelarCentro = document.querySelector('#cancelarCentro');
+btnCancelarTrabajador = document.querySelector('#cancelarTrabajador');
+btnRegistroCentro = document.querySelector('#registrarCentro');
+btnRegistroTrabajador = document.querySelector('#registrarTrabajador');
+CIFCentro = document.querySelector('#CIFCentro');
+razonsocialCentro = document.querySelector('#razonsocialCentro');
+nombreCentro = document.querySelector('#nombreCentro');
+encargadoCentro = document.querySelector('#encargadoCentro');
+ciudadCentro = document.querySelector('#ciudadCentro');
+telefonoCentro = document.querySelector('#telefonoCentro');
+codigopostalCentro = document.querySelector('#codigopostalCentro');
+direccionCentro = document.querySelector('#direccionCentro');
+emailCentro = document.querySelector('#emailCentro');
+ntrabajadorCentro = document.querySelector('#ntrabajadorCentro');
+txtmessageCentro = document.querySelector('#messageCentro');
+tablabodyC = document.querySelector('#tbodyC');
+tablabodyT = document.querySelector('#tbodyT');
+tablabodyCT = document.querySelector('#tbodyCT');
+tbodyCT = document.querySelector('#tbodyCT');
+tablaCentro = document.querySelector('#tablaCentro');
+tablatrabajador = document.querySelector('#tablaTrabajador');
+lblupdateCentro = document.querySelector('#updatelblCentro');
+lblupdateTrabajador = document.querySelector('#updatelblTrabajador');
+cmbcentro = document.querySelector('#cmbcentro');
+nifnie = document.querySelector('#nifnie');
+nombreTrabajador = document.querySelector('#nombreTrabajador');
+apellidosTrabajador = document.querySelector('#apellidosTrabajador');
+telefonoTrabajador = document.querySelector('#telefonoTrabajador');
+emailTrabajador = document.querySelector('#emailTrabajador');
+txtmessagetrabajador = document.querySelector('#messageTrabajador');
+containerCentroTrabajadores = document.querySelector('.containerCentroTrabajadores');
+btnCerrarCentroTrabajador = document.querySelector('#btnCerrarCentroTrabajador');
+valorcelda='';
+//SE CARGA AL INICIAR LA PAGINA
 document.addEventListener("DOMContentLoaded", function() {
     var inputs = document.querySelectorAll("input");
     inputs.forEach(function(input) {
@@ -22,28 +86,91 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error('Error:', error);
 });
 });
-/*AQUI EL  REGISTRO DE EMPRESAS*/
-btnRegistro = document.querySelector('#registrarEmpresa');
-btnCancelar = document.querySelector('#cancelarEmpresa');
-txtrazonSocial=document.querySelector('#razonsocial');
-txtCIF=document.querySelector('#CIF');
-txtgrupoempresarial = document.querySelector('#grupoempresarial');
-txtCNAE= document.querySelector('#CNAE');
-txtdescripcionCNAE = document.querySelector('#descripcionCNAE');
-txtciudad  = document.querySelector('#ciudad');
-txtcodigopostal  = document.querySelector('#codigopostal');
-txtdireccionempresa = document.querySelector('#direccionempresa');
-txtencargado = document.querySelector('#encargado');
-txtemailempresa  = document.querySelector('#emailempresa');
-txtntrabajadoresempresa = document.querySelector('#ntrabajadoresempresa');
-txttelefonoempresa = document.querySelector('#telefonoempresa');
-txtmessage = document.querySelector('#message');
-lblupdateEmpresa = document.querySelector('#updatelblEmpresa');
-inputBuscarEmpresa = document.querySelector('#buscarempresa');
-tablabody = document.querySelector('#tbody');
-tablaEmpresa = document.querySelector('#tablaEmpresa');
-let valorcelda='';
 
+btnCerrarCentroTrabajador.addEventListener('click',()=>{
+    containerCentroTrabajadores.classList.remove('containerCentroTrabajadoresMostrar');
+    containerCentroTrabajadores.classList.add('containerCentroTrabajadores');
+});
+
+btnCancelar.addEventListener('click',limpiarRegistroEmpresa);
+function validarNumero(input) {
+    if (typeof input === 'number' && !isNaN(input)) {
+        return true;
+    } else if (typeof input === 'string' && input.trim() !== '' && !isNaN(Number(input))) {
+        return true;
+    }
+    return false;
+}
+function ocultarLabel(lblcambio) {
+    const lbl=lblcambio;
+    setTimeout(() => {
+        lbl.classList.remove('alertlbl');
+        lbl.classList.remove('confirmtlbl');      
+        lbl.classList.remove('alert'); 
+        lbl.textContent='';
+    }, 1500); // 3 segundos
+}
+
+//SON LOS INPUT QUE BUSCAN EN LA TABLA
+inputBuscarEmpresa.addEventListener('keyup',()=>{   
+    const data= {search:inputBuscarEmpresa.value.trim()};   
+    fetch('/search', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {      
+       tablabody.innerHTML='';
+       data.forEach(item => {        
+        cargartablaEmpresa(item);
+    });
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+});
+
+});
+inputBuscarTrabajador.addEventListener('keyup',()=>{   
+    console.log(nidEmpresa);
+    const data= {search:inputBuscarTrabajador.value.trim(),idEmpresa:nidEmpresa};   
+    fetch('/searchTrabajador', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {      
+       tablabodyT.innerHTML='';
+       data.forEach(item => {                
+        cargartablaTrabajador(item);
+    });
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+});
+
+});
+
+//BOTON CANCELAR CIERRA LOS DIV Y MUESTRA LA PAGINA PRINCIPAL
+btnCancelarCentro.addEventListener('click',()=>{        
+    const containerCentros = 'containerCentros';
+    const containerCentrosSi = 'containerCentrosSi';    
+    centro.classList.add(containerCentros);
+    centro.classList.remove(containerCentrosSi);
+});
+btnCancelarTrabajador.addEventListener('click',()=>{        
+    const containerCentros = 'containerCentros';
+    const containerCentrosSi = 'containerCentrosSi';    
+    trabajador.classList.add(containerCentros);
+    trabajador.classList.remove(containerCentrosSi);
+});
+
+//BOTON DE REGISTRAR DE LOS FORMULARIOS
 btnRegistro.addEventListener('click', ()=>{
     txtmessage.textContent='';
     if (txtrazonSocial.value != '' && txtCIF.value != '' && txtgrupoempresarial.value != '' && txtCNAE.value != '' && txtdescripcionCNAE.value != '' && txtciudad.value != '' && txtcodigopostal.value != '' && txtdireccionempresa.value != '' && txtencargado.value != ''  && txtemailempresa.value != '' && txtntrabajadoresempresa.value != '' && txttelefonoempresa.value != '')
@@ -116,9 +243,143 @@ btnRegistro.addEventListener('click', ()=>{
     
     
 });
+btnRegistroCentro.addEventListener('click', ()=>{
+    //txtmessage.textContent='';//hay que crear
+     if (nombreCentro.value != '' && encargadoCentro.value != '' && ciudadCentro .value != '' && telefonoCentro.value != '' && codigopostalCentro.value != '' && direccionCentro.value != ''  && emailCentro.value != '' && ntrabajadorCentro.value != '')
+     {
+         const dataVerificar = {nombreCentro:nombreCentro.value, CIF:CIFCentro.value, razonsocial:razonsocialCentro.value };        
+        
+         const data = {
+             nombreCentro : nombreCentro.value,
+             encargadoCentro : encargadoCentro.value,
+             ciudadCentro : ciudadCentro.value,
+             telefonoCentro :  telefonoCentro.value,
+             codigopostalCentro : codigopostalCentro.value,
+             direccionCentro :  direccionCentro.value,
+             emailCentro : emailCentro.value,
+             ntrabajadorCentro : ntrabajadorCentro.value,
+             idEmpresa:nidEmpresa
+             };   
+             fetch('/verificarcentro', {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json'
+             },
+             body: JSON.stringify(dataVerificar)
+             })
+             .then(response => response.json())
+             .then(dataVerificar => {
+                 if (dataVerificar.rowsAffected==0)
+                 {
+                     //registrar empresa
+                     fetch('/registrarcentro',{
+                         method:'POST',
+                         headers:{
+                             'Content-Type':'application/json'
+                         },
+                         body: JSON.stringify(data)
+                     }).then(response=>response.json()).then(data=>{
+                         limpiarRegistroCentro();
+                         txtmessageCentro.classList.remove('alert');
+                         txtmessageCentro.textContent =`SE REGISTRO CORRECTAMENTE A LA BASE DE DATOS`;
+                         txtmessageCentro.classList.add('confirm');                     
+                         ocultarLabel(txtmessageCentro);       
+                         //lista de centro cargar
+                         cargarListaCentro(nidEmpresa);
+                     
+                         
+                     }).catch((error) => {
+                         console.error('Error:', error);
+                     });                    
+                 }
+                 else
+                 {
+                     txtmessageCentro.classList.remove('confirm');
+                     txtmessageCentro.classList.add('alert');
+                     txtmessageCentro.textContent =`EL CENTRO YA SE ENCUENTRA REGISTRADA EN LA BASE DE DATOS`;
+                     ocultarLabel(txtmessageCentro);       
+                 }
+             })
+             .catch((error) => {
+                 console.error('Error:', error);
+         });
+     }
+     else{
+         txtmessageCentro.classList.remove('confirm');
+         txtmessageCentro.classList.add('alert');
+         txtmessageCentro.textContent=`SE REQUIEREN DATOS PARA EL REGISTRO`;                  
+         ocultarLabel(txtmessageCentro);
+     }   
+}); 
+ btnRegistroTrabajador.addEventListener('click', ()=>{
+     //txtmessage.textContent='';//hay que crear
+    
+      if (nifnie.value != '' && nombreTrabajador.value != '' && apellidosTrabajador.value != '' && telefonoTrabajador.value != '' && emailTrabajador.value != '')
+      {
+          const dataVerificar = {idCentro:cmbcentro.value, nif:nifnie.value };        
+         
+          const data = {
+             nif : nifnie.value,
+             nombres : nombreTrabajador.value,
+             apellidos : apellidosTrabajador.value,
+             telefono : telefonoTrabajador.value,
+             email : emailTrabajador.value,
+             idCentro :  cmbcentro.value         
+             };   
+              fetch('/verificartrabajador', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(dataVerificar)
+              })
+              .then(response => response.json())
+              .then(dataVerificar => {                
+                  if (dataVerificar.rowsAffected==0)
+                  {
+                      //registrar empresa
+                      fetch('/registrartrabajador',{
+                          method:'POST',
+                          headers:{
+                              'Content-Type':'application/json'
+                          },
+                          body: JSON.stringify(data)
+                      }).then(response=>response.json()).then(data=>{
+                          limpiarRegistroTrabajador();
+                          //console.log(nidEmpresa);
+                         // txtmessageTrabajador.classList.remove('alert');
+                          //txtmessageTrabajador.textContent =`SE REGISTRO CORRECTAMENTE A LA BASE DE DATOS`;
+                          //txtmessagetrabajador.classList.add('confirm');                     
+                          //ocultarLabel(txtmessageTrabajador);       
+                          //lista de centro cargar
+                          cargarListaTrabajador(nidEmpresa);
+                         
+                          
+                      }).catch((error) => {
+                          console.error('Error:', error);
+                      });                    
+                  }
+                  else
+                  {
+                      txtmessagetrabajador.classList.remove('confirm');
+                      txtmessagetrabajador.classList.add('alert');
+                      txtmessagetrabajador.textContent =`EL TRABAJADOR YA SE ENCUENTRA REGISTRADA EN LA BASE DE DATOS`;
+                      ocultarLabel(txtmessagetrabajador);       
+                  }
+              })
+              .catch((error) => {
+                  console.error('Error:', error);
+          });
+      }
+      else{
+          txtmessagetrabajador.classList.remove('confirm');
+          txtmessagetrabajador.classList.add('alert');
+          txtmessagetrabajador.textContent=`SE REQUIEREN DATOS PARA EL REGISTRO`;                  
+          ocultarLabel(txtmessagetrabajador);
+      }   
+});
 
-btnCancelar.addEventListener('click',limpiarRegistroEmpresa);
-
+//LIMPIAR LOS INPUT ANTES DE REGISTRAR
 function limpiarRegistroEmpresa(){
     txtrazonSocial.value='';
     txtCIF.value='';
@@ -144,7 +405,16 @@ function limpiarRegistroCentro(){
     emailCentro.value='';
     ntrabajadorCentro.value='';   
 }
+function limpiarRegistroTrabajador(){
+     nifnie.value='';
+    nombreTrabajador.value='';
+    apellidosTrabajador.value='';
+    telefonoTrabajador.value='';
+    emailTrabajador.value='';     
+    
+}
 
+//SE ACTUALIZA LOS DATOS CON LOS BLUR
 function updateEmpresa(atributo,id,valor){
         const data= {atributo,id,valor};
         fetch('/updateEmpresa', {
@@ -173,35 +443,79 @@ function updateEmpresa(atributo,id,valor){
             console.error('Error:', error);
     });
 }
-
-function ocultarLabel(lblcambio) {
-    const lbl=lblcambio;
-    setTimeout(() => {
-        lbl.classList.remove('alertlbl');
-        lbl.classList.remove('confirmtlbl');      
-        lbl.classList.remove('alert'); 
-        lbl.textContent='';
-    }, 1500); // 3 segundos
+function updateCentro(atributo,id,valor){
+    const data= {atributo,id,valor};    
+    fetch('/updateCentro', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {       
+        if(data.rowsAffected){
+            lblupdateCentro.classList.remove('alertlbl');//clase para empresa y centor es lo mismo
+            lblupdateCentro.textContent=`SE REALIZO LA MODIFICACION`;
+            lblupdateCentro.classList.add('confirmlbl');//clase para empresa y centor es lo mismo
+        }
+        else
+        {
+            lblupdateCentro.classList.add('confirmlbl');
+            lblupdateCentro.textContent=`NO SE PUDO REALIZAR LA MODIFICACION`;                         
+            lblupdateCentro.classList.remove('alertlbl');
+        }
+        ocultarLabel(lblupdateCentro);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+});
+}
+function updateTrabajador(atributo,id,valor){
+    const data= {atributo,id,valor};     
+    fetch('/updateTrabajador', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {       
+        if(data.rowsAffected){
+            
+            lblupdateTrabajador.classList.remove('alertlbl');//clase para empresa y centor es lo mismo
+            lblupdateTrabajador.textContent=`SE REALIZO LA MODIFICACION`;
+            lblupdateTrabajador.classList.add('confirmlbl');//clase para empresa y centor es lo mismo
+        }
+        else
+        {
+            lblupdateTrabajador.classList.add('confirmlbl');
+            lblupdateTrabajador.textContent=`NO SE PUDO REALIZAR LA MODIFICACION`;                         
+            lblupdateTrabajador.classList.remove('alertlbl');
+        }
+        ocultarLabel(lblupdateTrabajador);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+});
 }
 
+//PARA ACTUALIZAR LOS DATOS DE EMPRESA, CENTRO Y TRABAJADORES
 $(document).on("blur","#tbody td[data-id]",function(event){  
-    let valor=this.innerHTML;
-    console.log(valor,valorcelda);
+    let valor=this.innerHTML.trim();
     let id =event.currentTarget.dataset.id;  //obtener el valor del data-id    
-    if (valor != valorcelda)
+    numero=false;    
+    if (event.currentTarget.id =='tdntrabajadorEmpresa')
     {
+        validarNumero(valor)?numero=false:numero=true
+    }
+    
+    if (valor != valorcelda && numero==false)
+    {      
         if (valor!='<br>'&& valor!='')
         {        
-            updateEmpresa(event.currentTarget.id,id,valor);
-            const celdas = document.querySelectorAll('td[contenteditable="true"]');
-            celdas.forEach(celda => {
-                celda.setAttribute('autocorrect', 'off');
-                celda.setAttribute('autocomplete', 'off');
-                celda.setAttribute('autocapitalize', 'off');
-                celda.setAttribute('spellcheck', 'false');
-            });
-        // Deshabilitar autocorrección, autocompletado y capitalización automática
-     
+            updateEmpresa(event.currentTarget.id,id,valor);   
         }
         else
         {
@@ -217,41 +531,82 @@ $(document).on("blur","#tbody td[data-id]",function(event){
     }
    
 });
+$(document).on("blur","#tbodyC td[data-id]",function(event){  
+    let valor=this.innerHTML.trim();    
+    let campo=event.target.id;
+    let id =event.currentTarget.dataset.id;  //obtener el valor del data-id    
+    numero=false;    
+    if (event.currentTarget.id =='tdcp_')
+    {
+        validarNumero(valor)?numero=false:numero=true
+    }
+    if (valor != valorcelda && numero==false)
+    {      
+        if (valor!='<br>'&& valor!='')
+        {        
+            updateCentro(campo,id,valor);          
+        }
+        else
+        {
+            lblupdateCentro.classList.remove('confirmlbl');
+            lblupdateCentro.textContent=`DATOS NO VALIDOS`;                
+            lblupdateCentro.classList.add('alertlbl');
+            this.innerHTML=valorcelda;
+            ocultarLabel(lblupdateCentro);
+        }
+    }
+    else{
+        this.innerHTML=valorcelda;
+    }
+});
+$(document).on("blur","#tbodyT td[data-id]",function(event){  
+    let valor=this.innerHTML.trim();    
+    let campo=event.target.id;
+    let id =event.currentTarget.dataset.id;  //obtener el valor del data-id    
+    numero=false;    
+    if (event.currentTarget.id =='tdcp_')
+    {
+        validarNumero(valor)?numero=false:numero=true
+    }
+    if (valor != valorcelda && numero==false)
+    {      
+        if (valor!='<br>'&& valor!='')
+        {        
+            updateTrabajador(campo,id,valor);          
+        }
+        else
+        {
+            
+            lblupdateTrabajador.classList.remove('confirmlbl');
+            lblupdateTrabajador.textContent=`DATOS NO VALIDOS`;                
+            lblupdateTrabajador.classList.add('alertlbl');
+            this.innerHTML=valorcelda;
+            ocultarLabel(lblupdateCentro);
+        }
+    }
+    else{
+        this.innerHTML=valorcelda;
+    }
+});
 
+//AQUI SE CAPTURA EL DATO DE LA CELDA DE LA TABLA
 tablabody.addEventListener('click', function(event) {  
     if (event.target.tagName === 'TD') {       
          valorcelda = event.target.innerText;       
     }
 });
-
-inputBuscarEmpresa.addEventListener('keyup',()=>{   
-    const data= {search:inputBuscarEmpresa.value};   
-    fetch('/search', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => {      
-       tablabody.innerHTML='';
-       data.forEach(item => {        
-        cargartablaEmpresa(item);
-    });
-    })
-    .catch((error) => {
-        console.error('Error:', error);
+tablaCentro.addEventListener('click', function(event) {  
+    if (event.target.tagName === 'TD') {       
+         valorcelda = event.target.innerText;           
+    }
+});
+tablatrabajador.addEventListener('click', function(event) {  
+    if (event.target.tagName === 'TD') {       
+         valorcelda = event.target.innerText;       
+    }
 });
 
-});
-
-razonsocialCentro = document.querySelector('#razonsocialCentro');
-CIFCentro = document.querySelector('#CIFCentro');
-let nidEmpresa=0;
-
-const centro = document.querySelector('#listaCentros'); 
-
+//SE SACA DATOS PARA LOS INPUT DE CENTRO Y TRABAJADOR "idEmpresa y Nombre empresa"
 function MostrarCentro(idEmpresa)
 { 
     nidEmpresa=idEmpresa;
@@ -279,7 +634,68 @@ function MostrarCentro(idEmpresa)
     centro.classList.add(containerCentrosSi);  
    
 }
+function MostrarTrabajador(idEmpresa)
+{ 
+    nidEmpresa=idEmpresa;
+    const data= {idEmpresa};
+    fetch('/empresas/obtener', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {        
+        razonsocialTrabajador.value = data[0].razonSocial; 
+        CIFTrabajador.value=data[0].CIF;
+        razonsocialTrabajador.classList.add('blanco');
+        CIFTrabajador.classList.add('blanco');
+        
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+    /////
+    fetch('/listarcentro', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {        
+                                
+                cmbcentro.innerHTML = '';
+                data.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.idCentro;
+                    option.text = item.nombreCentro;
+                    cmbcentro.appendChild(option);
+                });
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+    /////
+    const containerCentros = 'containerCentros';
+    const containerCentrosSi = 'containerCentrosSi';    
+    trabajador.classList.remove(containerCentros);
+    trabajador.classList.add(containerCentrosSi);  
+   
+}
 
+//AQUI CUANDO SE PRESOINA ESCAPE SE CIERRA LA VENTANA TRABAJADOR U CENTRO
+trabajador.addEventListener('keydown', function(event) {   
+    if (event.key === 'Escape') {
+
+        const containerCentros = 'containerCentros';
+        const containerCentrosSi = 'containerCentrosSi';    
+        trabajador.classList.add(containerCentros);
+        trabajador.classList.remove(containerCentrosSi);
+    }
+});
 centro.addEventListener('keydown', function(event) {   
     if (event.key === 'Escape') {
 
@@ -290,6 +706,7 @@ centro.addEventListener('keydown', function(event) {
     }
 });
 
+//AQUI SE CREAN LAS TABLAS DINAMICAMENTE, CON CONEXION SQL Y ESTAN LOS BOTONES 
 function cargartablaEmpresa(item){
   //aqui es el cargar
     const fila = tablabody.insertRow();//se crea una nueva fila           
@@ -315,12 +732,16 @@ function cargartablaEmpresa(item){
     btnCentros.addEventListener("click", () => {
         MostrarCentro(btnCentros.id);
         cargarListaCentro(item.idEmpresa);
-  });
-
-  btnTrabajador.innerHTML = `<span class="material-symbols-outlined personapron">person_apron </span>`;
-  tdbutton_.appendChild(btnTrabajador);
+    });
  
-  btndatos.innerHTML=`  <span class="material-symbols-outlined gridview">grid_view</span>`;
+    btnTrabajador.innerHTML = `<span class="material-symbols-outlined personapron">engineering</span>`;
+    btnTrabajador.id = item.idEmpresa;
+    tdbutton_.appendChild(btnTrabajador);
+    btnTrabajador.addEventListener("click", () => {
+       MostrarTrabajador(btnTrabajador.id);       
+       cargarListaTrabajador(item.idEmpresa);
+    });
+  btndatos.innerHTML=`<span class="material-symbols-outlined gridview">picture_as_pdf</span>`;
   tdbutton_.appendChild(btndatos);
   tdbutton_.classList.add('btncentro');
  
@@ -391,120 +812,224 @@ function cargartablaEmpresa(item){
 
 //fin cargar
 }
+function cargartablaCentro(item){
+    //aqui es el cargar
+    
+    const fila = tablabodyC.insertRow();//se crea una nueva fila           
+    const tdnombrecentro_ = fila.insertCell(0);//primer columna
+    const tdencargadocentro_= fila.insertCell(1);//primer columna
+    const tdciudadcentro_= fila.insertCell(2);//primer columna
+    const tdcp_= fila.insertCell(3);//primer columna
+    tdcp_.classList.add('derecha');
+    const tddireccioncentro_= fila.insertCell(4);//primer columna
+    const tdtelefonocentro_= fila.insertCell(5);//primer columna
+    tdtelefonocentro_.classList.add('derecha');
+    const tdemailcentro_= fila.insertCell(6);//primer columna
+    const tdntrabajadorescentro_= fila.insertCell(7);//primer columna     
+    const tdbutton_= fila.insertCell(8);//primer columna     
+    tdbutton_.classList.add('btncentro');
+    let aTrabajadores = document.createElement("a")  
+    aTrabajadores.innerHTML=`Total de Trabajadores: ${item.ntrabajadorCentro} `;
+    aTrabajadores.id = item.idEmpresa;  
+    tdntrabajadorescentro_.classList.add('listatrabajador');
+    tdntrabajadorescentro_.appendChild(aTrabajadores);
+   //
+    tdnombrecentro_.setAttribute('data-id', item.idCentro);
+    tdnombrecentro_.id =`tdnombreCentro_`;
+    tdnombrecentro_.contentEditable = true;
+    tdnombrecentro_.textContent = item.nombreCentro;  
+    //
+    tdencargadocentro_.setAttribute('data-id', item.idCentro);
+    tdencargadocentro_.id =`tdencargadocentro_`;
+    tdencargadocentro_.contentEditable = true;
+    tdencargadocentro_.textContent = item.encargadoCentro;  
+    //
+    tdciudadcentro_.setAttribute('data-id', item.idCentro);
+    tdciudadcentro_.id =`tdciudadcentro_`;
+    tdciudadcentro_.contentEditable = true;
+    tdciudadcentro_.textContent = item.ciudad;  
+    //
+    tdcp_.setAttribute('data-id', item.idCentro);
+    tdcp_.id =`tdcp_`;
+    tdcp_.contentEditable = true;    
+    tdcp_.textContent = item.codigopostal;  
+    //
+    tddireccioncentro_.setAttribute('data-id', item.idCentro);
+    tddireccioncentro_.id =`tddireccioncentro_`;
+    tddireccioncentro_.contentEditable = true;
+    tddireccioncentro_.textContent = item.direccionCentro; 
+    // 
+    tdtelefonocentro_.setAttribute('data-id', item.idCentro);
+    tdtelefonocentro_.id =`tdtelefonocentro_`;
+    tdtelefonocentro_.contentEditable = true;
+    tdtelefonocentro_.textContent = item.telefonoCentro; 
+    //
+    tdemailcentro_.setAttribute('data-id', item.idCentro);
+    tdemailcentro_.id =`tdemailcentro_`;
+    tdemailcentro_.contentEditable = true;
+    tdemailcentro_.textContent = item.emailCentro; 
+    //
+    aTrabajadores.addEventListener("click", () => {        
+        cargarListaTrabajadorCentro(item.idCentro);
+        containerCentroTrabajadores.classList.remove('containerCentroTrabajadores');
+        containerCentroTrabajadores.classList.add('containerCentroTrabajadoresMostrar');
+    });
+    //
+    let btdocumentoCentro =document.createElement("button");
+    btdocumentoCentro.innerHTML=`<span class="material-symbols-outlined gridview">picture_as_pdf </span>`;
+    btdocumentoCentro.id = item.idEmpresa;
+    tdbutton_.appendChild(btdocumentoCentro);
+    btdocumentoCentro.addEventListener("click", () => {
+        // MostrarCentro(btnCentros.id);
+        // cargarListaCentro(item.idEmpresa);
+        alert('ir a documentoacion del trabajador en todo elcentro');
+    });
+    //
+    let btneliminarCentro =document.createElement("button");
+    btneliminarCentro.innerHTML=`<span class="material-symbols-outlined deletes">delete </span>`;
+    btneliminarCentro.id = item.idEmpresa;
+    tdbutton_.appendChild(btneliminarCentro);
+    btneliminarCentro.addEventListener("click", () => {
+        // MostrarCentro(btnCentros.id);
+        // cargarListaCentro(item.idEmpresa);
+        alert('eliminar el centro');
+    });
+}
+function cargartablaTrabajador(item){
+    //aqui es el cargar
+    
+    const fila = tablabodyT.insertRow();//se crea una nueva fila           
+    const tdn_ = fila.insertCell(0);//primer columna
+    tdn_.classList.add('derecha');
+    const tdcentro_= fila.insertCell(1);//primer columna
+    const tdnif_= fila.insertCell(2);//primer columna
+    tdnif_.classList.add('derecha');
+    const tdnombre_= fila.insertCell(3);//primer columna
+    const tdapellidos_= fila.insertCell(4);//primer columna
+    const tdemail_= fila.insertCell(5);//primer columna
+    const tdtelefono_= fila.insertCell(6);//primer columna
+    tdtelefono_.classList.add('derecha');
+    const tdfecha_= fila.insertCell(7);//primer columna
+    tdfecha_.classList.add('derecha');
+    const tdestado_= fila.insertCell(8);//primer columna     
+    const tdbutton_= fila.insertCell(9);//primer columna     
+    tdbutton_.classList.add('btncentro');
+    tdn_.setAttribute('data-id', item.idTrabajador);
+    tdn_.id =`tdn_`;
+    //tdn_.contentEditable = true;
+    tdn_.textContent = item.n;  
+    //
+    tdcentro_.setAttribute('data-id', item.idTrabajador);
+    tdcentro_.id =`tdcentro_`;
+   // tdcentro_.contentEditable = true;
+    tdcentro_.textContent = item.nombreCentro;  
+    //
+    tdnif_.setAttribute('data-id', item.idTrabajador);
+    tdnif_.id =`tdnif_`;
+    tdnif_.contentEditable = true;
+    tdnif_.textContent = item.NIF;  
+    //
+    tdnombre_.setAttribute('data-id', item.idTrabajador);
+    tdnombre_.id =`tdnombre_`;
+    tdnombre_.contentEditable = true;
+    tdnombre_.textContent = item.nombres;  
+    //
+    tdapellidos_.setAttribute('data-id', item.idTrabajador);
+    tdapellidos_.id =`tdapellidos_`;
+    tdapellidos_.contentEditable = true;
+    tdapellidos_.textContent = item.apellidos;  
+    //
+    tdemail_.setAttribute('data-id', item.idTrabajador);
+    tdemail_.id =`tdemail_`;
+    tdemail_.contentEditable = true;
+    tdemail_.textContent = item.email;  
+    //
+    tdtelefono_.setAttribute('data-id', item.idTrabajador);
+    tdtelefono_.id =`tdtelefono_`;
+    tdtelefono_.contentEditable = true;
+    tdtelefono_.textContent = item.telefono;  
+    //
+    tdfecha_.setAttribute('data-id', item.idTrabajador);
+    tdfecha_.id =`tdfecha_`;
+   // tdfecha_.contentEditable = true;
+    tdfecha_.textContent = item.fechaAlta;  
+    //
+    tdestado_.setAttribute('data-id', item.idTrabajador);
+    tdestado_.id =`tdestado_`;
+    //tdestado_.contentEditable = true;
+    tdestado_.textContent = item.Estado;  
+    //
+    let btnmodificarTrabajador =document.createElement("button");
+    btnmodificarTrabajador.innerHTML=`<span class="material-symbols-outlined tuerca">swap_horiz </span>`;
+    btnmodificarTrabajador.id = item.idEmpresa;
+    tdbutton_.appendChild(btnmodificarTrabajador);
+    btnmodificarTrabajador.addEventListener("click", () => {
+        // MostrarCentro(btnCentros.id);
+        // cargarListaCentro(item.idEmpresa);
+        alert('cambiar centro y estado');
+    });
+    //
+    let btdocumentoTrabajador =document.createElement("button");
+    btdocumentoTrabajador.innerHTML=`<span class="material-symbols-outlined gridview"> picture_as_pdf </span>`;
+    btdocumentoTrabajador.id = item.idEmpresa;
+    tdbutton_.appendChild(btdocumentoTrabajador);
+    btdocumentoTrabajador.addEventListener("click", () => {
+        // MostrarCentro(btnCentros.id);
+        // cargarListaCentro(item.idEmpresa);
+        alert('ir a documentoacion del trabajador');
+    });
+    //
+    let bteliminarTrabajador =document.createElement("button");
+    bteliminarTrabajador.innerHTML=`<span class="material-symbols-outlined deletes">  delete </span>`;
+    bteliminarTrabajador.id = item.idEmpresa;
+    tdbutton_.appendChild(bteliminarTrabajador);
+    bteliminarTrabajador.addEventListener("click", () => {
+        // MostrarCentro(btnCentros.id);
+        // cargarListaCentro(item.idEmpresa);
+        alert('ir a eliminar del trabajador, simepre y cuando no tenga documentos y etc');
+    });
+}
+function cargartablaTrabajadorCentro(item){
+    //aqui es el cargar
+    const fila = tablabodyCT.insertRow();//se crea una nueva fila          
+    const tdn_= fila.insertCell(0);//primer columna
+    tdn_.classList.add('derecha');
+    const tdnif_= fila.insertCell(1);//primer columna
+    tdnif_.classList.add('izquierda');
+    const tdnombre_= fila.insertCell(2);//primer columna
+    tdnombre_.classList.add('izquierda');
+    const tdapellidos_= fila.insertCell(3);//primer columna
+    tdapellidos_.classList.add('izquierda');
+    const tdtelefono_= fila.insertCell(4);//primer columna 
+   
 
-btnCancelarCentro = document.querySelector('#cancelarCentro');
-
-btnCancelarCentro.addEventListener('click',()=>{        
-    const containerCentros = 'containerCentros';
-    const containerCentrosSi = 'containerCentrosSi';    
-    centro.classList.add(containerCentros);
-    centro.classList.remove(containerCentrosSi);
-});
-//no funciona por el id verificar
-// function getEmpresaCentro(id){
-//     console.log(id.value);
-//     const data= {id};
-//     fetch('/empresas/obtener', {
-//     method: 'POST',
-//     headers: {
-//         'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(data)
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         console.log(data.rowsAffected);        
-       
-       
-//     })
-//     .catch((error) => {
-//         console.error('Error:', error);
-// });
-// }
-
-btnRegistroCentro = document.querySelector('#registrarCentro');
-CIFCentro = document.querySelector('#CIFCentro');
-razonsocialCentro = document.querySelector('#razonsocialCentro');
-nombreCentro = document.querySelector('#nombreCentro');
-encargadoCentro = document.querySelector('#encargadoCentro');
-ciudadCentro = document.querySelector('#ciudadCentro');
-telefonoCentro = document.querySelector('#telefonoCentro');
-codigopostalCentro = document.querySelector('#codigopostalCentro');
-direccionCentro = document.querySelector('#direccionCentro');
-emailCentro = document.querySelector('#emailCentro');
-ntrabajadorCentro = document.querySelector('#ntrabajadorCentro');
-txtmessageCentro = document.querySelector('#messageCentro');
-tablabodyC = document.querySelector('#tbodyC');
-tablaCentro = document.querySelector('#tablaCentro');
-lblupdateCentro = document.querySelector('#updatelblCentro');
-btnRegistroCentro.addEventListener('click', ()=>{
-   //txtmessage.textContent='';//hay que crear
-    if (nombreCentro.value != '' && encargadoCentro.value != '' && ciudadCentro .value != '' && telefonoCentro.value != '' && codigopostalCentro.value != '' && direccionCentro.value != ''  && emailCentro.value != '' && ntrabajadorCentro.value != '')
-    {
-        const dataVerificar = {nombreCentro:nombreCentro.value, CIF:CIFCentro.value, razonsocial:razonsocialCentro.value };        
-       
-        const data = {
-            nombreCentro : nombreCentro.value,
-            encargadoCentro : encargadoCentro.value,
-            ciudadCentro : ciudadCentro.value,
-            telefonoCentro :  telefonoCentro.value,
-            codigopostalCentro : codigopostalCentro.value,
-            direccionCentro :  direccionCentro.value,
-            emailCentro : emailCentro.value,
-            ntrabajadorCentro : ntrabajadorCentro.value,
-            idEmpresa:nidEmpresa
-            };   
-            fetch('/verificarcentro', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dataVerificar)
-            })
-            .then(response => response.json())
-            .then(dataVerificar => {
-                if (dataVerificar.rowsAffected==0)
-                {
-                    //registrar empresa
-                    fetch('/registrarcentro',{
-                        method:'POST',
-                        headers:{
-                            'Content-Type':'application/json'
-                        },
-                        body: JSON.stringify(data)
-                    }).then(response=>response.json()).then(data=>{
-                        limpiarRegistroCentro();
-                        txtmessageCentro.classList.remove('alert');
-                        txtmessageCentro.textContent =`SE REGISTRO CORRECTAMENTE A LA BASE DE DATOS`;
-                        txtmessageCentro.classList.add('confirm');                     
-                        ocultarLabel(txtmessageCentro);       
-                        //lista de centro cargar
-                        cargarListaCentro(nidEmpresa);
-                    
-                        
-                    }).catch((error) => {
-                        console.error('Error:', error);
-                    });                    
-                }
-                else
-                {
-                    txtmessageCentro.classList.remove('confirm');
-                    txtmessageCentro.classList.add('alert');
-                    txtmessageCentro.textContent =`LA EMPRESA YA SE ENCUENTRA REGISTRADA EN LA BASE DE DATOS`;
-                    ocultarLabel(txtmessageCentro);       
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-        });
-    }
-    else{
-        txtmessageCentro.classList.remove('confirm');
-        txtmessageCentro.classList.add('alert');
-        txtmessageCentro.textContent=`SE REQUIEREN DATOS PARA EL REGISTRO`;                  
-        ocultarLabel(txtmessageCentro);
-    }   
-});
+    tdn_.setAttribute('data-id', item.idTrabajador);
+    tdn_.id =`tdnif_`;
+    tdn_.contentEditable = true;
+    tdn_.textContent = item.n;  
+    //
+    tdnif_.setAttribute('data-id', item.idTrabajador);
+    tdnif_.id =`tdnif_`;
+    tdnif_.contentEditable = true;
+    tdnif_.textContent = item.NIF;  
+    //
+    tdnombre_.setAttribute('data-id', item.idTrabajador);
+    tdnombre_.id =`tdnombre_`;
+    tdnombre_.contentEditable = true;
+    tdnombre_.textContent = item.nombres;  
+    //
+    tdapellidos_.setAttribute('data-id', item.idTrabajador);
+    tdapellidos_.id =`tdapellidos_`;
+    tdapellidos_.contentEditable = true;
+    tdapellidos_.textContent = item.apellidos;  
+    //
+    tdtelefono_.setAttribute('data-id', item.idTrabajador);
+    tdtelefono_.id =`tdtelefono_`;
+    tdtelefono_.contentEditable = true;
+    tdtelefono_.textContent = item.telefono;  
+  
+}
+//AQUI SE CARGA LAS LISTA DESDE SQL Y SE MANDA A LAS FUNCIONES DE ARRIBA CARGARTABLA...
 
 function cargarListaCentro(idEmpresa){
     const id=idEmpresa;
@@ -529,121 +1054,55 @@ function cargarListaCentro(idEmpresa){
         console.error('Error:', error);
      });                 
 }
-
-function cargartablaCentro(item){
-    //aqui es el cargar
-    
-    const fila = tablabodyC.insertRow();//se crea una nueva fila           
-    const tdnombrecentro_ = fila.insertCell(0);//primer columna
-    const tdencargadocentro_= fila.insertCell(1);//primer columna
-    const tdciudadcentro_= fila.insertCell(2);//primer columna
-    const tdcp_= fila.insertCell(3);//primer columna
-    const tddireccioncentro_= fila.insertCell(4);//primer columna
-    const tdtelefonocentro_= fila.insertCell(5);//primer columna
-    const tdemailcentro_= fila.insertCell(6);//primer columna
-    const tdntrabajadorescentro_= fila.insertCell(7);//primer columna     
-    let aTrabajadores = document.createElement("a")  
-    aTrabajadores.innerHTML=`Lista Trabajadores: ${item.ntrabajadorCentro} `;
-    aTrabajadores.id = item.idEmpresa;  
-    tdntrabajadorescentro_.classList.add('centrarfila');
-    tdntrabajadorescentro_.appendChild(aTrabajadores);
-    aTrabajadores.addEventListener("click", () => {
-       
-    });
-    tdnombrecentro_.setAttribute('data-id', item.idCentro);
-    tdnombrecentro_.id =`tdnombreCentro_`;
-    tdnombrecentro_.contentEditable = true;
-    tdnombrecentro_.textContent = item.nombreCentro;  
-    //
-    tdencargadocentro_.setAttribute('data-id', item.idCentro);
-    tdencargadocentro_.id =`tdencargadocentro_`;
-    tdencargadocentro_.contentEditable = true;
-    tdencargadocentro_.textContent = item.encargadoCentro;  
-    //
-    tdciudadcentro_.setAttribute('data-id', item.idCentro);
-    tdciudadcentro_.id =`tdciudadcentro_`;
-    tdciudadcentro_.contentEditable = true;
-    tdciudadcentro_.textContent = item.ciudad;  
-    //
-    tdcp_.setAttribute('data-id', item.idCentro);
-    tdcp_.id =`tdcp_`;
-    tdcp_.contentEditable = true;
-    tdcp_.textContent = item.codigopostal;  
-    //
-    tddireccioncentro_.setAttribute('data-id', item.idCentro);
-    tddireccioncentro_.id =`tddireccioncentro_`;
-    tddireccioncentro_.contentEditable = true;
-    tddireccioncentro_.textContent = item.direccionCentro; 
-    // 
-    tdtelefonocentro_.setAttribute('data-id', item.idCentro);
-    tdtelefonocentro_.id =`tdtelefonocentro_`;
-    tdtelefonocentro_.contentEditable = true;
-    tdtelefonocentro_.textContent = item.telefonoCentro; 
-    //
-    tdemailcentro_.setAttribute('data-id', item.idCentro);
-    tdemailcentro_.id =`tdemailcentro_`;
-    tdemailcentro_.contentEditable = true;
-    tdemailcentro_.textContent = item.emailCentro; 
-    //
-
-}
-
-$(document).on("blur","#tbodyC td[data-id]",function(event){  
-    let valor=this.innerHTML;
-    
-    let campo=event.target.id;
-    let id =event.currentTarget.dataset.id;  //obtener el valor del data-id    
-
-    if (valor!=valorcelda)
-    if (valor!='<br>'&& valor!='')
-    {  
-       console.log(valor,32);
-        updateCentro(campo,id,valor);      
-    }
-    else
-    {        
-        lblupdateCentro.classList.remove('confirmlbl');
-        lblupdateCentro.textContent=`DATOS NO VALIDOS`;                
-        lblupdateCentro.classList.add('alertlbl');
-        this.innerHTML=valorcelda;
-        ocultarLabel(lblupdateCentro);
-    }    
-
-});
-
-tablaCentro.addEventListener('click', function(event) {  
-    if (event.target.tagName === 'TD') {       
-         valorcelda = event.target.innerText;   
-         console.log(valorcelda);    
-    }
-});
-
-function updateCentro(atributo,id,valor){//para actualizar solo enviamos un valor no todo
-    const data= {atributo,id,valor};    
-    fetch('/updateCentro', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json'
+function cargarListaTrabajador(idEmpresa){
+    const id=idEmpresa;
+    const data={idEmpresa:id};
+   
+    fetch('/listartrabajador',{
+    method:'POST',
+    headers:{
+        'Content-Type':'application/json'
     },
     body: JSON.stringify(data)
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data.rowsAffected);
-        if(data.rowsAffected){
-            lblupdateCentro.classList.remove('alertlbl');//clase para empresa y centor es lo mismo
-            lblupdateCentro.textContent=`SE REALIZO LA MODIFICACION`;
-            lblupdateCentro.classList.add('confirmlbl');//clase para empresa y centor es lo mismo
-        }
-        else
-        {
-            lblupdateCentro.classList.add('confirmlbl');
-            lblupdateCentro.textContent=`NO SE PUDO REALIZAR LA MODIFICACION`;                         
-            lblupdateCentro.classList.remove('alertlbl');
-        }
-        ocultarLabel(lblupdateCentro);
+    .then(response=>response.json())
+    .then(data => {      
+        tablabodyT.innerHTML='';      
+        data.forEach(item => {        
+        cargartablaTrabajador(item);
+        });
     })
     .catch((error) => {
         console.error('Error:', error);
-});
+     });                 
 }
+function cargarListaTrabajadorCentro(idCentro){
+    const id=idCentro;
+    const data={idCentro:id};
+    
+    fetch('/listartrabajadorcentro',{
+    method:'POST',
+    headers:{
+        'Content-Type':'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response=>response.json())
+    .then(data => {      
+        tablabodyCT.innerHTML='';      
+        data.forEach(item => {        
+            cargartablaTrabajadorCentro(item);
+        });
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+     });                 
+}
+
+
+
+
+
+
+
+

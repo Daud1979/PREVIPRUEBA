@@ -185,6 +185,12 @@ li a:hover{
 #CIF{
     width: 100px;
 }
+#CIFCentro{
+    width: 100px;
+}
+#CIFTrabajador{
+    width: 100px;
+}
 #ntrabajadoresempresa{
     width: 60px;
 }
@@ -230,6 +236,16 @@ li a:hover{
     border-radius: 5px;
     padding-left: 1rem;
 }
+select{    
+    padding: 0.1rem;
+    margin: 0rem;
+    width:  62%;
+    min-width: 62%;
+    outline: none;    
+    border: none;
+    border-radius: 5px;
+    padding-left: 1rem;
+}
 .headLista h4{    
     margin-bottom: 0.5rem 0;
     text-shadow: 5px 0 15px rgba(250, 248, 248, 1); 
@@ -259,11 +275,12 @@ li a:hover{
 #tbody button{
     cursor: pointer;
 }
- td{
+td{
     transition: all 0.4s;
     -moz-transition: all 0.4s;
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
+    padding: 0 5px;
 }
  td:focus{
     background: #0d0d0e;
@@ -271,24 +288,36 @@ li a:hover{
     transform: translateY(10px) translateX(20px) rotateX(360deg);   
     font-size: 1.5rem;
 }
-
+#nifnie{
+    width: 40%;
+}
+#telefonoTrabajador{
+    width: 40%;
+}
 .homework{
-    color: green;
+    color: rgb(226, 110, 33);
+   
 }
 .personapron{
-    color:brown;
+    color:rgb(42, 126, 4);
+}
+.deletes{
+    color: #e70606;
 }
 .gridview{
-    color: rgb(87, 87, 82);
+    color: rgb(76, 116, 204);
+}
+.tuerca{
+    color:rgb(18, 80, 3)
 }
 #tablaEmpresa td:last-child{
-    width: 95px;
+    width: 80px;
     background: #F0F0F0;
 }
 #tablaEmpresa td:last-child button{
   border: none;
 }
- .containerCentros{    
+.containerCentros{    
     display: none;    
 }
 .containerCentrosSi{
@@ -301,7 +330,7 @@ li a:hover{
     transform: translate(-50%, -50%);
     display: block;
     border-radius: 5px;
-} 
+ } 
 .listaCentros{
     background: rgb(192, 190, 190);
     border-radius: 5px;
@@ -316,10 +345,15 @@ li a:hover{
 .listaCentro{
     overflow-x: scroll;
     width: 100%;
-    height: 100vh;  
-    
+    height: 100vh;     
 }
+
 #tablaCentro{
+    width: 100%;    
+    background: white;  
+}
+
+#tablaTrabajador{
     width: 100%;    
     background: white;  
 }
@@ -329,28 +363,103 @@ li a:hover{
     color:white;
     border-color: 1px solid white;    
 }
+
+#tablaTrabajador thead{
+    background: #131313;
+    color:white;
+    border-color: 1px solid white;    
+}
+
 #tablaCentro td{
     border: 1px solid rgb(192, 190, 190);
     background: white;
+    padding: 0;
     padding-left: 5px;
-    height: 20px;
+  
 }
-.centrarfila{  
+#tablaTrabajador td{
+    border: 1px solid rgb(192, 190, 190);
+    background: white;   
+   
+}
+#tablaCentro td:last-child{
+    width: 50px;
+    background: #F0F0F0;
+}
+#tablaCentro td:last-child button{
+  border: none;
+}
+#tablaTrabajador td:last-child{
+    width: 80px;
+    background: #F0F0F0;
+}
+#tablaTrabajador td:last-child button{
+  border: none;
+}
+#tbodyC button{
+    cursor: pointer;
+}
+#tbodyT button{
+    cursor: pointer;
+}
+
+.listatrabajador{  
     align-items: start;
     background: #d6d5d5;   
 }
-.centrarfila:hover{
+.listatrabajador:hover{
     color: #4057FB;
-    cursor: pointer;}
-
-#colTrabajadoreCentro{
-    width: 150px;
+    cursor: pointer;
 }
-#tdcp_{
-    text-align: end;
-    padding-right: 5px;
+.centrar{
+    text-align: center;
 }
-#tdtelefonocentro_{
+.izquierda{
+    text-align: start;
+}
+.derecha{
     text-align: end;
+}
+.containerCentroTrabajadores{
+    background:transparent;
+    position: absolute;
+    width:100%;
+    height: 100%;  
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    
+}
+.containerCentroTrabajadoresMostrar{
+    display: block;
+}
+.centrolistaTrabajadores{
+    background: #ffffff; 
+    width: 45%;
+    height: 75%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    text-align: end;
+    border: 1px solid black;
+    padding: 10px;
+    overflow-y: scroll;
+}
+#btnCerrarCentroTrabajador{
+    margin-top: 15px 10px 15px 10px;
+    background: white;
+    color: black;
+    padding: 4px 10px;   
+    width: 120px;
+    border-radius: 8px 0 8px 0;   
+  
+}
+#tbodyCT td{
     padding-right: 5px;
+    padding-left: 5px;
+    background: #d6d5d5; 
 }
