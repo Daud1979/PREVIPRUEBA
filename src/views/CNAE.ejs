@@ -1,2 +1,78 @@
-<%- include('./partials/headNav') %>
-<h1>hola</h1>
+<%- include('./partials/navegador') %>
+<%- include('./partials/link_CNAE') %>
+<div class="container">
+    <div class="CNAE">
+          <div class="headCNAE">
+              <div class="titleCNAE">
+                  <h4>GESTION DE CNAE</h4>
+              </div>
+              <div class="formCNAE">
+                  <div class="rowlabelinput">
+                      <div class="labelinput primero">                    
+                          <label for="">Codigo CNAE</label>                    
+                          <input type="text" required id="codigoCNAE" name="codigoCNAE" >
+                      </div>
+                      <div class="labelinput segundo">                    
+                          <label class="lblcodigoCNAE" for="">Descripcion CNAE</label>                    
+                          <input type="text" required id="descripcionCNAE" name="descripcionCNAE" >                  
+                      </div>                                           
+                  </div>
+                  <div class="rowlabelinput">
+                    <div class="labelinput primero">                    
+                        <label for="">Tarifa CNAE</label>                    
+                        <input type="number" required id="tarifaCNAE" name="tarifaCNAE" >
+                    </div>
+                  <div class="datosCNAE">
+                        <div class="labelinput uno">                    
+                            <label class="lblcodigoCNAE" for="">Complejidad</label>                    
+                            <input type="text" required id="complejidadCNAE" name="complejidadCNAE" >                  
+                        </div>    
+                        <div class="labelinput dos">                    
+                            <label class="lblcodigoCNAE" for="">Cod. Complejidad</label>                    
+                            <input type="text" required id="codcomplejidad" name="codcomplejidad" >                  
+                        </div>        
+                        <div class="labelinput tres">                    
+                            <label class="lblcodigoCNAE" for="">Grupo</label>                    
+                            <input type="text" required id="grupo" name="grupo" >                  
+                        </div>    
+                  </div>                                
+                </div>
+                  <!--aqui el medio-->
+            
+              
+              <div class="btnInput">
+                  <label id="message" for=""></label>
+                  <div class="button">
+                      <input type="button" name="registrarCNAE" id="registrarCNAE" value="Registrar">
+                      <input type="button" name="cancelarCNAE" id="cancelarCNAE" value="Cancelar">
+                  </div>
+              </div>
+          </div>
+          </div>
+
+          <div class="listCNAE">
+              <div class="headLista">
+                  <h4>LISTA DE CNAE</h4>
+                  <input type="text" name="buscarCNAE" id="buscarCNAE" placeholder="Escriba">                
+              </div>
+              <div class="tablaCNAEScroll">
+              <table id="tablaCNAE">
+                  <thead>
+                      <tr>
+                          <th>CNAE</th>
+                          <th>Descripcion</th>
+                          <th>Tarifa</th>
+                          <th>Complejidad Preventiva</th>                        
+                          <th>Complejidad</th>
+                          <th>Grupo</th>  
+                          <th>Opcion</th>                     
+                      </tr>
+                  </thead>
+                  <tbody id="tbody">                  
+                  
+                  </tbody>
+              </table>
+          </div>
+          </div>
+          <label id="updatelblCNAE" ></label>      
+      </div>

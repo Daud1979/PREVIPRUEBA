@@ -1,0 +1,273 @@
+
+.container{
+    width: 95%;
+    height: 87vh;    
+    margin: 0 auto;
+    
+}
+.CNAE{
+    width: 100%;
+    height: 100%;    
+    border-radius: 5px;
+}
+.headCNAE{
+    background:#353535;
+    border-radius: 5px;
+    height:auto;
+    width: 100%;
+    text-align: center;  
+    padding: 0.5rem 0; 
+    
+}
+.headCNAE h4{
+    padding-top: 1rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 5px 0 15px rgba(250, 248, 248, 0.2); 
+    color: white;
+}
+.formCNAE{    
+    width: 98%;
+    margin: 0 auto;  
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    
+}
+.rowlabelinput{
+    padding: 0;
+    margin: 0;
+    width: 100%;    
+    display: flex;
+    align-content: center;
+    align-items: center;
+}
+.primero{
+    width: 15%;
+    display: flex;    
+    justify-content: space-between;
+    padding: 0 5px;
+}
+.segundo{
+    width: 90%;
+    display: flex;
+    gap: 3px;
+    
+}
+.primero input{
+   width:  40%
+}
+.segundo input{
+    width: 88%;
+}
+.labelinput{     
+    text-align: start;    
+    display: flex;   
+    align-items: center;  
+    color: white;
+}
+
+.labelinput input{
+    font-size: 1.2rem;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding-left: 7px;
+    display: block;    
+}
+.btnInput{
+    width: 98%;
+    text-align: end;    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;   
+}
+.datosCNAE{
+    display: flex;
+    width: 90%;
+   
+}
+.uno{
+   display: flex;
+   gap: 2.9rem;
+   width: 60%;
+}
+.uno input{
+    width: 100%;
+}
+.dos{
+    display: flex;
+    gap: 1rem;
+    width: 29%;
+   
+}
+.dos input{
+    width: 50%;
+}
+.tres{
+    display: flex;
+    gap: 0.5rem;
+    width: 10%;  
+    
+}
+.tres input{
+    width: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.button{
+    margin: auto 0;
+   
+}
+.alert{
+    background: red;
+    color:white;
+    font-size: 1.1rem;
+    text-shadow: 5px 0 15px rgba(255, 255, 255, 0.1);  
+}
+.confirm{
+    color:white;
+    text-shadow: 5px 0 15px rgba(27, 38, 122, 1);  
+    font-size: 1.1rem;
+}
+
+.confirmlbl{
+    color:white;
+    background:#4057FB;
+    font-size: 1.3rem;
+    position: absolute;    
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    width:400px;
+    transform: translate(-50%, -50%);
+    border-radius: 10px 0 10px 0;
+}
+.alertlbl{
+    color:white;
+    background:#e70606;
+    font-size: 1.3rem;
+    position: absolute;
+    width: 400px;   
+    left:  50%;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+  padding: 2rem;
+}
+.btnInput input{
+    padding: 6px 15px;
+    background: white;
+    outline: none;
+    border-radius: 7px 0 7px 0;
+    border: none;
+    font-size: 1rem;
+}
+
+.btnInput input:hover{
+    background:#4057FB;
+    color: white;
+    outline: white;
+    border-color: 1px solid white;
+}
+.headLista{
+    background: rgb(192, 190, 190);
+    border-radius: 5px;  
+    height: 10%;
+}
+.headLista input{
+    padding: 0.2rem;
+    margin: 0.5rem;
+    width:  50%;
+    min-width: 50%;
+    outline: none;    
+    border: none;
+    border-radius: 5px;
+    padding-left: 1rem;
+}
+
+
+/*LISTA DE EMPRESA*/
+.listCNAE{
+    margin-top: 0.2rem;
+    border-radius: 5px;
+    height:90%;
+    width: 100%;        
+    display: flex;
+    flex-direction: column;
+    gap:0.2rem;
+}
+
+
+.headLista h4{    
+    margin-bottom: 0.5rem 0;
+    text-shadow: 5px 0 15px rgba(250, 248, 248, 1); 
+    color: rgb(0, 0, 0); 
+    text-align: center;     
+}
+#tablaCNAE{
+   border: 1px solid rgb(192, 190, 190);
+   border-radius: 5px;
+   width: 100%;
+}
+
+.tablaCNAEScroll{
+    overflow-x: scroll;
+    width: 100%;
+    height: 100%;
+}
+#tablaCNAE thead{
+    background: #131313;
+    color:white;
+    border-color: 1px solid white;    
+}
+#tablaCNAE td{
+    border: 1px solid rgb(192, 190, 190);
+    background: white;
+}
+td{
+    transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    padding: 0 5px;
+}
+ td:focus{
+    background: #0d0d0e;
+    color: #4057FB;
+    transform: translateY(10px) translateX(20px) rotateX(360deg);   
+    font-size: 1.5rem;
+}
+.centrar{
+    text-align: center;
+}
+.izquierda{
+    text-align: start;
+}
+.derecha{
+    text-align: end;
+}
+.deletes{
+    color: #e70606;
+}
+#tablaCNAE td:last-child{
+    width: 20px;
+    background: #F0F0F0;
+}
+#tablaCNAE td:last-child button{
+  border: none;
+}
+#tbody button{
+    cursor: pointer;
+}
