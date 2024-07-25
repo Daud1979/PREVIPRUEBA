@@ -60,13 +60,32 @@ emailTrabajador = document.querySelector('#emailTrabajador');
 txtmessagetrabajador = document.querySelector('#messageTrabajador');
 containerCentroTrabajadores = document.querySelector('.containerCentroTrabajadores');
 btnCerrarCentroTrabajador = document.querySelector('#btnCerrarCentroTrabajador');
+containerCambioCentroTrabajadores = document.querySelector('.containerCambioCentroTrabajadores');
+btnCambioCerrarCentroTrabajador = document.querySelector('#btnCambioCerrarCentroTrabajador');
+btnCambioCentroTrabajador =document.querySelector('#btnCambioCentroTrabajador');
+lblupdateCambiarTrabajador = document.querySelector('#lblupdateCambiarTrabajador');
+containerMostrarCNAEMostras = document.querySelector('.containerMostrarCNAEMostras');
+containerCentroTrabajadoresMostrar = document.querySelector('#containerCentroTrabajadoresMostrar');
+containerCNAEModificar = document.querySelector('#containerCNAEModificar');
+btnCambioCerrarEmpresa = document.querySelector('#btnCambioCerrarEmpresa');
+containerMostrarCNAE = document.querySelector('.containerMostrarCNAE');
+cambioCNAE = document.querySelector('#CambioCNAE');
+btnCambioEmpresa = document.querySelector('#btnCambioEmpresa');
 valorcelda='';
+nidTrabajador='';
 //SE CARGA AL INICIAR LA PAGINA
+btnCancelar.addEventListener('click',limpiarRegistroEmpresa);
 document.addEventListener("DOMContentLoaded", function() {
     var inputs = document.querySelectorAll("input");
     inputs.forEach(function(input) {
         input.setAttribute("autocomplete", "off");
     });
+    cargarListaEmpresa()
+});
+
+//SE CARGAR TODO LA TABLA EMPRESA
+function cargarListaEmpresa()
+{
     const data= {search:inputBuscarEmpresa.value};   
     fetch('/search', {
     method: 'POST',
@@ -80,19 +99,71 @@ document.addEventListener("DOMContentLoaded", function() {
        tablabody.innerHTML='';
        data.forEach(item => {        
         cargartablaEmpresa(item);
+        cargarCNAE(txtCNAE);
     });
     })
     .catch((error) => {
         console.error('Error:', error);
 });
+}
+
+function cargarCNAE(select){
+    const data= {novalor:'0'};   
+    fetch('/cargarCNAE', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {         
+        data.forEach(item => {        
+            const nuevoOption = document.createElement('option');
+            nuevoOption.value =item.idCNAE;
+            nuevoOption.text = item.CNAE;
+            select.appendChild(nuevoOption);
+        });
+    })
+    .catch((error) => {
+        console.error('Error:', error);
 });
+
+}
+
+function cargarCNAE_(select){
+    const data= {novalor:'0'};   
+    fetch('/cargarCNAE', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {         
+        data.forEach(item => {        
+            const nuevoOption = document.createElement('option');
+            nuevoOption.value =item.CNAE1;
+            nuevoOption.text = item.CNAE;
+            select.appendChild(nuevoOption);
+        });
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+});
+
+}
 
 btnCerrarCentroTrabajador.addEventListener('click',()=>{
     containerCentroTrabajadores.classList.remove('containerCentroTrabajadoresMostrar');
     containerCentroTrabajadores.classList.add('containerCentroTrabajadores');
 });
-
-btnCancelar.addEventListener('click',limpiarRegistroEmpresa);
+btnCambioCerrarCentroTrabajador.addEventListener('click',()=>{
+    containerCambioCentroTrabajadores.classList.remove('containerCambioCentroTrabajadoresMostrar');
+    containerCambioCentroTrabajadores.classList.add('containerCambioCentroTrabajadores');    
+    
+});
 function validarNumero(input) {
     if (typeof input === 'number' && !isNaN(input)) {
         return true;
@@ -169,19 +240,23 @@ btnCancelarTrabajador.addEventListener('click',()=>{
     trabajador.classList.add(containerCentros);
     trabajador.classList.remove(containerCentrosSi);
 });
+btnCambioCerrarEmpresa.addEventListener('click',()=>{        
+    containerMostrarCNAE.classList.remove('containerMostrarCNAEMostras');
+    containerMostrarCNAE.classList.add('containerMostrarCNAE');    
+});
 
 //BOTON DE REGISTRAR DE LOS FORMULARIOS
 btnRegistro.addEventListener('click', ()=>{
     txtmessage.textContent='';
-    if (txtrazonSocial.value != '' && txtCIF.value != '' && txtgrupoempresarial.value != '' && txtCNAE.value != '' && txtdescripcionCNAE.value != '' && txtciudad.value != '' && txtcodigopostal.value != '' && txtdireccionempresa.value != '' && txtencargado.value != ''  && txtemailempresa.value != '' && txtntrabajadoresempresa.value != '' && txttelefonoempresa.value != '')
+    if (txtrazonSocial.value != '' && txtCIF.value != '' && txtgrupoempresarial.value != '' && txtCNAE.value != '' && txtciudad.value != '' && txtcodigopostal.value != '' && txtdireccionempresa.value != '' && txtencargado.value != ''  && txtemailempresa.value != '' && txtntrabajadoresempresa.value != '' && txttelefonoempresa.value != '')
     {
         const dataVerificar = {razonsocial:txtrazonSocial.value, CIF:txtCIF.value };        
         const data = {
             razonsocial:txtrazonSocial.value,
             CIF:txtCIF.value,
             grupoempresarial:txtgrupoempresarial.value,
-            CNAE: txtCNAE.value,
-            descripcionCNAE:txtdescripcionCNAE.value,
+            CNAE: txtCNAE.value,      
+            descripcionCNAE : txtCNAE.options[txtCNAE.selectedIndex].text,    
             ciudad: txtciudad.value,
             codigopostal:txtcodigopostal.value,
             direccionempresa:txtdireccionempresa.value,
@@ -384,8 +459,7 @@ function limpiarRegistroEmpresa(){
     txtrazonSocial.value='';
     txtCIF.value='';
     txtgrupoempresarial.value='';
-    txtCNAE.value='';
-    txtdescripcionCNAE.value='';
+    txtCNAE.value='';    
     txtciudad.value='';
     txtcodigopostal.value='';
     txtdireccionempresa.value='';
@@ -498,8 +572,58 @@ function updateTrabajador(atributo,id,valor){
     })
     .catch((error) => {
         console.error('Error:', error);
-});
+    });
 }
+//actualizar el centro y estado del trabajador
+btnCambioCentroTrabajador.addEventListener('click',()=>{
+    estado = document.querySelector('#estadoTrabajador').value;
+    id = document.querySelector('#CambioCentro').value;
+    const data= {idTrabajador:nidTrabajador,idCentro:id,estado:estado};      
+    fetch('/updateTrabajadorCentroEstado', {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {           
+        lblupdateCambiarTrabajador.textContent=`SE REALIZO LA MODIFICACION`;
+        lblupdateCambiarTrabajador.classList.add('confirm');//clase para empresa y centor es lo mismo
+        ocultarLabel(lblupdateCambiarTrabajador);
+        cargarListaTrabajador(nidEmpresa);
+       
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });  
+});
+//actualizar CNAE de empresa
+btnCambioEmpresa.addEventListener('click',()=>{
+    const data= {CNAE:cambioCNAE.value,descripcionCNAE:cambioCNAE.options[cambioCNAE.selectedIndex].text,idEmpresa:nidEmpresa};      
+    console.log('html',data);
+    fetch('/updateCNAEEmpresa', {
+    method: 'POST',
+    headers: {
+    'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {   
+        cargarListaEmpresa();
+        lblupdateCambiarEmpresa = document.querySelector('#lblupdateCambiarEmpresa');        
+        lblupdateCambiarEmpresa.textContent=`SE REALIZO LA MODIFICACION`;
+        lblupdateCambiarEmpresa.classList.add('confirm');//clase para empresa y centor es lo mismo
+        ocultarLabel(lblupdateCambiarEmpresa);
+        CNEAEActual.value=cambioCNAE.options[cambioCNAE.selectedIndex].text;
+       
+     })
+    .catch((error) => {
+        console.error('Error:', error);
+    });  
+    
+});
 
 //PARA ACTUALIZAR LOS DATOS DE EMPRESA, CENTRO Y TRABAJADORES
 $(document).on("blur","#tbody td[data-id]",function(event){  
@@ -600,6 +724,7 @@ tablaCentro.addEventListener('click', function(event) {
          valorcelda = event.target.innerText;           
     }
 });
+
 tablatrabajador.addEventListener('click', function(event) {  
     if (event.target.tagName === 'TD') {       
          valorcelda = event.target.innerText;       
@@ -713,16 +838,15 @@ function cargartablaEmpresa(item){
     const CIF_ = fila.insertCell(0);//primer columna
     const tdrazonSocial_= fila.insertCell(1);//primer columna
     const tdgrupoEmpresarial_= fila.insertCell(2);//primer columna
-    const tdCNAE_= fila.insertCell(3);//primer columna
-    const tddescripcionCNAE_= fila.insertCell(4);//primer columna
-    const tdntrabajadorEmpresa_= fila.insertCell(5);//primer columna
-    const tddireccionEmpresa_= fila.insertCell(6);//primer columna
-    const tdencargadoEmpresa_= fila.insertCell(7);//primer columna
-    const tdemail_= fila.insertCell(8);//primer columna
-    const tdtelefono_= fila.insertCell(9);//primer columna
-    const tdciudad_= fila.insertCell(10);//primer columna
-    const tdcodigopostal_= fila.insertCell(11);//primer columna
-    const tdbutton_= fila.insertCell(12);//botones
+    const tdCNAE_= fila.insertCell(3);//primer columna    
+    const tdntrabajadorEmpresa_= fila.insertCell(4);//primer columna
+    const tddireccionEmpresa_= fila.insertCell(5);//primer columna
+    const tdencargadoEmpresa_= fila.insertCell(6);//primer columna
+    const tdemail_= fila.insertCell(7);//primer columna
+    const tdtelefono_= fila.insertCell(8);//primer columna
+    const tdciudad_= fila.insertCell(9);//primer columna
+    const tdcodigopostal_= fila.insertCell(10);//primer columna
+    const tdbutton_= fila.insertCell(11);//botones
     let btnCentros = document.createElement("button")
     let btnTrabajador = document.createElement("button");
     let btndatos =document.createElement("button");
@@ -761,16 +885,26 @@ function cargartablaEmpresa(item){
   tdgrupoEmpresarial_.contentEditable = true;
   tdgrupoEmpresarial_.textContent = item.grupoEmpresarial;  
   //
-  tdCNAE_.setAttribute('data-id', item.idEmpresa);
-  tdCNAE_.id =`tdCNAE`;
-  tdCNAE_.contentEditable = true;
-  tdCNAE_.textContent = item.CNAE;  
-  //
-  tddescripcionCNAE_.setAttribute('data-id', item.idEmpresa);
-  tddescripcionCNAE_.id =`tddescripcionCNAE`;
-  tddescripcionCNAE_.contentEditable = true;
-  tddescripcionCNAE_.textContent = item.descripcionCNAE;  
-  //
+  let aCNAE = document.createElement("a")  
+  aCNAE.innerHTML=item.CNAE;
+  aCNAE.id = item.idEmpresa;  
+  tdCNAE_.classList.add('listatrabajador');
+  tdCNAE_.classList.add('celdaizq');
+  tdCNAE_.appendChild(aCNAE);
+  aCNAE.addEventListener('click',()=>{    
+    CNEAEActual = document.querySelector('#CNEAEActual');    
+    CNEAEActual.value=item.descripcionCNAE;
+    cargarCNAE_(cambioCNAE);
+    nidEmpresa=item.idEmpresa;
+    containerCNAEModificar.classList.remove('containerMostrarCNAE');
+    containerCNAEModificar.classList.add('containerMostrarCNAEMostras');
+  });
+//   tdCNAE_.setAttribute('data-id', item.idEmpresa);
+//   tdCNAE_.id =`tdCNAE`;
+//   tdCNAE_.contentEditable = true;
+//   tdCNAE_.classList.add('celdaizq');
+//   tdCNAE_.textContent = item.CNAE;  
+  // 
   tdntrabajadorEmpresa_.setAttribute('data-id', item.idEmpresa);
   tdntrabajadorEmpresa_.id =`tdntrabajadorEmpresa`;
   tdntrabajadorEmpresa_.contentEditable = true;
@@ -890,9 +1024,7 @@ function cargartablaCentro(item){
     btneliminarCentro.id = item.idEmpresa;
     tdbutton_.appendChild(btneliminarCentro);
     btneliminarCentro.addEventListener("click", () => {
-        // MostrarCentro(btnCentros.id);
-        // cargarListaCentro(item.idEmpresa);
-        alert('eliminar el centro');
+        eliminarCentro(item.idCentro,nidEmpresa);        
     });
 }
 function cargartablaTrabajador(item){
@@ -903,7 +1035,7 @@ function cargartablaTrabajador(item){
     tdn_.classList.add('derecha');
     const tdcentro_= fila.insertCell(1);//primer columna
     const tdnif_= fila.insertCell(2);//primer columna
-    tdnif_.classList.add('derecha');
+   
     const tdnombre_= fila.insertCell(3);//primer columna
     const tdapellidos_= fila.insertCell(4);//primer columna
     const tdemail_= fila.insertCell(5);//primer columna
@@ -964,9 +1096,9 @@ function cargartablaTrabajador(item){
     btnmodificarTrabajador.id = item.idEmpresa;
     tdbutton_.appendChild(btnmodificarTrabajador);
     btnmodificarTrabajador.addEventListener("click", () => {
-        // MostrarCentro(btnCentros.id);
-        // cargarListaCentro(item.idEmpresa);
-        alert('cambiar centro y estado');
+        cargarCambioTrabajadorCentro(item.idCentro,item.nombreCentro,item.estado,item.idTrabajador);
+        containerCambioCentroTrabajadores.classList.remove('containerCambioCentroTrabajadores');
+        containerCambioCentroTrabajadores.classList.add('containerCambioCentroTrabajadoresMostrar');
     });
     //
     let btdocumentoTrabajador =document.createElement("button");
@@ -1029,8 +1161,8 @@ function cargartablaTrabajadorCentro(item){
     tdtelefono_.textContent = item.telefono;  
   
 }
-//AQUI SE CARGA LAS LISTA DESDE SQL Y SE MANDA A LAS FUNCIONES DE ARRIBA CARGARTABLA...
 
+//AQUI SE CARGA LAS LISTA DESDE SQL Y SE MANDA A LAS FUNCIONES DE ARRIBA CARGARTABLA...
 function cargarListaCentro(idEmpresa){
     const id=idEmpresa;
     const data={idEmpresa:id};
@@ -1047,7 +1179,34 @@ function cargarListaCentro(idEmpresa){
         tablabodyC.innerHTML='';
         
         data.forEach(item => {        
-        cargartablaCentro(item);
+            cargartablaCentro(item);
+        });
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+     });                 
+}
+function cargarListaCentroTrabajadoCambio(idEmpresa){
+    const id=idEmpresa;
+    const data={idEmpresa:id};
+   
+    fetch('/listarcentro',{
+    method:'POST',
+    headers:{
+        'Content-Type':'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response=>response.json())
+    .then(data => {    
+        CambioCentro = document.querySelector('#CambioCentro');  
+        CambioCentro.textContent='';
+        CambioCentro.value='';
+        data.forEach(item => {        
+            const nuevoOption = document.createElement('option');
+            nuevoOption.value =item.idCentro;
+            nuevoOption.text = item.nombreCentro;
+            CambioCentro.appendChild(nuevoOption);
         });
     })
     .catch((error) => {
@@ -1069,7 +1228,7 @@ function cargarListaTrabajador(idEmpresa){
     .then(data => {      
         tablabodyT.innerHTML='';      
         data.forEach(item => {        
-        cargartablaTrabajador(item);
+            cargartablaTrabajador(item);
         });
     })
     .catch((error) => {
@@ -1099,8 +1258,45 @@ function cargarListaTrabajadorCentro(idCentro){
      });                 
 }
 
-
-
+//ELIMINAR CENTRO Y TRABAJADORES
+function eliminarCentro(idCentro,idEmpresa){
+    const data={idCentro};    
+    fetch('/eliminarcentro',{
+    method:'POST',
+    headers:{
+        'Content-Type':'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response=>response.json())
+    .then(data => {      
+        
+        cargarListaCentro(idEmpresa);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    })
+}   
+//CAMBIO DE CENTRO Y ESTADO PARA TRABAJADOR
+function cargarCambioTrabajadorCentro(idCentro,centro,estado,idTrabajador){
+    centroActualTrabajador =document.querySelector('#centroActualTrabajador');
+    centroActualTrabajador.value=centro;
+    nidTrabajador=idTrabajador;
+    cargarListaCentroTrabajadoCambio(nidEmpresa);
+    estadoTrabajador = document.querySelector('#estadoTrabajador');
+    estadoTrabajador.textContent='';
+    estadoTrabajador.value='';
+    const opciones = [
+        {value: 'H', text: 'Habilitado'},
+        {value: 'D', text: 'Deshabilitado'}        
+    ];
+    opciones.forEach(function(opcion) {
+        const nuevoOption = document.createElement('option');
+        nuevoOption.value = opcion.value;
+        nuevoOption.text = opcion.text;
+        estadoTrabajador.appendChild(nuevoOption);
+    });
+}
 
 
 

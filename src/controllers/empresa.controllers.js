@@ -13,12 +13,16 @@ export const getAllEmpresas = async(req,res) => {// lista de todas las empresas 
     const result = await pool.request().query('SELECT razonSocial,grupoEmpresarial,CIF,CNAE,direccionEmpresa,encargadoEmpresa,email,telefono,ciudad,codigopostal FROM EMPRESA ORDER BY razonSocial'); //consulta sql
     res.json(result);//retornamos el resultado en formato json
 }
-
 export const getEmpresa = async(req,res) => {// lista de todas las empresas de manera asincrona  
     const pool   = await getConnection();//funcion await
     const idActividad = req.params.id;
     const result = await pool.request().query(`SELECT * FROM ACTIVIDADES WHERE idActividad=${idActividad}`); //consulta sql
     res.json(result);//retornamos el resultado en formato json
+}
+export const postcargarCNAE = async (req,res)=>{
+    const pool   = await getConnection();//funcion await
+    const result = await pool.request().query(`SELECT idCNAE,CNAE=CNAE+', '+descripcionCNAE,CNAE1=CNAE FROM CNAE order by CNAE asc`); //consulta sql
+    res.json(result.recordset);//retornamos el resultado en formato json
 }
 //buscado de empresa por cif, nombre empresa y encargado
 export const postEmpresaSearch = async (req,res)=>{
@@ -28,7 +32,6 @@ export const postEmpresaSearch = async (req,res)=>{
     res.json(result.recordset);
     //res.render('empresa', { empresas: result.recordset });
 }
-
 export const postsearchTrabajador = async (req,res)=>{
     const pool = await getConnection();//funcion await
     const {search,idEmpresa} = req.body;     
@@ -60,12 +63,13 @@ export const postregistrarempresa = async (req, res)=>{
         emailempresa,
         ntrabajadoresempresa,
         telefonoempresa  } =req.body;
+        
          const result = await pool.request()
          .input('razonSocial', sql.VarChar, razonsocial)
          .input('CIF', sql.VarChar, CIF)
          .input('grupoEmpresarial', sql.VarChar, grupoempresarial)
-         .input('CNAE', sql.VarChar, CNAE)
-         .input('descripcionCNAE', sql.VarChar, descripcionCNAE)
+         .input('CNAE', sql.VarChar, CNAE)         
+         .input('descripcionCNAE', sql.VarChar, descripcionCNAE)  
          .input('direccionEmpresa', sql.VarChar, direccionempresa)
          .input('encargadoEmpresa', sql.VarChar, encargado)
          .input('email', sql.VarChar, emailempresa)
@@ -77,8 +81,8 @@ export const postregistrarempresa = async (req, res)=>{
             razonSocial,
             grupoEmpresarial,
             CIF,
-            CNAE,
-            descripcionCNAE,
+            CNAE,    
+            descripcionCNAE,       
             direccionEmpresa,
             encargadoEmpresa,
             email,
@@ -91,8 +95,8 @@ export const postregistrarempresa = async (req, res)=>{
             ltrim(rtrim(@razonSocial)),
             ltrim(rtrim(@grupoEmpresarial)),
             ltrim(rtrim(@CIF)),
-            ltrim(rtrim(@CNAE)),
-            ltrim(rtrim(@descripcionCNAE)),
+            ltrim(rtrim(@CNAE)),     
+            ltrim(rtrim(@descripcionCNAE)),            
             ltrim(rtrim(@direccionEmpresa)),
             ltrim(rtrim(@encargadoEmpresa)),
             ltrim(rtrim(@email)),
@@ -424,4 +428,39 @@ export const postlistartrabajadorcentro = async (req,res)=>{
     .input('idCentro',sql.Int,idCentro)
     .query(`select ROW_NUMBER() OVER( ORDER BY idTrabajador) AS n,NIF,nombres,apellidos,telefono from TRABAJADOREMPRESAS where idCentro=@idCentro`); //consulta sql
     res.json(result.recordset);//retornamos el resultado en formato json
+}
+
+export const posteliminarcentro= async (req,res)=>{
+    const {idCentro}=req.body;
+  
+    const pool = await getConnection();
+    const result = await pool.request()
+    .input('idCentro',sql.Int,idCentro)
+    .query(`DELETE FROM CENTROSEMPRESAS WHERE idCentro = @idCentro and (SELECT count(*) FROM TRABAJADOREMPRESAS WHERE idCentro=@idCentro) = 0`); //consulta sql
+    res.json(result);//retornamos el resultado en formato json
+}
+
+export const postupdateTrabajadorCentroEstado = async (req, res) =>{
+    const {idTrabajador,idCentro,estado} = req.body;  
+    console.log(req.body);  
+    const pool = await getConnection();     
+    result = await pool.request()
+    .input('idTrabajador', sql.Int, idTrabajador)
+    .input('idCentro', sql.Int, idCentro)
+    .input('estado', sql.VarChar, estado)
+    .query(`UPDATE TRABAJADOREMPRESAS SET  estado=@estado, idCentro=@idCentro WHERE idTrabajador = @idTrabajador`);
+    
+    res.json(result);  
+}
+
+export const postupdateCNAEEmpresa = async (req,res)=>{
+    const {CNAE,descripcionCNAE,idEmpresa} = req.body;  
+    
+        const pool = await getConnection();    
+    result = await pool.request()
+    .input('CNAE', sql.VarChar, CNAE)
+    .input('descripcionCNAE', sql.VarChar, descripcionCNAE)
+    .input('idEmpresa', sql.Int, idEmpresa)
+    .query(`UPDATE EMPRESA SET CNAE=@CNAE,descripcionCNAE=@descripcionCNAE WHERE idEmpresa = @idEmpresa`);
+    res.json(req.body);               
 }

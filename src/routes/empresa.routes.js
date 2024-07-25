@@ -1,5 +1,5 @@
 import { Router } from "express";
-import {postupdateCentro,postlistarCentro,postregistrarCentro,verificarCentro, getEmpresas,getAllEmpresas,postverificarempresa,postregistrarempresa,updateEmpresa,postEmpresaSearch,postempresaobtenerempresa,postverificartrabajador,postregistrartrabajador,postlistartrabajador,postsearchTrabajador,postupdateTrabajador,postlistartrabajadorcentro} from '../controllers/empresa.controllers.js'
+import {postupdateCentro,postlistarCentro,postregistrarCentro,verificarCentro, getEmpresas,getAllEmpresas,postverificarempresa,postregistrarempresa,updateEmpresa,postEmpresaSearch,postempresaobtenerempresa,postverificartrabajador,postregistrartrabajador,postlistartrabajador,postsearchTrabajador,postupdateTrabajador,postlistartrabajadorcentro,posteliminarcentro,postupdateTrabajadorCentroEstado,postcargarCNAE,postupdateCNAEEmpresa} from '../controllers/empresa.controllers.js'
 const router = Router();
 //selecionamos todas las empresas
 router.get('/empresas',getEmpresas);
@@ -29,4 +29,8 @@ router.post('/registrartrabajador',postregistrartrabajador);
 router.post('/listartrabajador',postlistartrabajador);
 router.post('/updateTrabajador',postupdateTrabajador);
 router.post('/listartrabajadorcentro',postlistartrabajadorcentro);
+router.post('/eliminarcentro',posteliminarcentro);
+router.post('/updateTrabajadorCentroEstado',postupdateTrabajadorCentroEstado);
+router.post('/cargarCNAE',postcargarCNAE);
+router.post('/updateCNAEEmpresa',postupdateCNAEEmpresa);
 export default router;

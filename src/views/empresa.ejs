@@ -3,10 +3,11 @@
   <!--EMPRESAS-->
     <div class="empresas">
         <div class="headEmpresa">
-            <h4>GESTION DE EMPRESA</h4>
-            <form >
-                <div class="formEmpresa">
-                    <div class="rowlabelinput">
+            <div class="titleEmpresa">
+                <h4>GESTION DE EMPRESA</h4>
+            </div>
+            <div class="formEmpresa">
+                <div class="rowlabelinput">
                     <div class="labelinput">                    
                         <label for="">Razon Social</label>                    
                         <input type="text" required id="razonsocial" name="razonsocial" >
@@ -19,69 +20,66 @@
                         <label for="">Grupo Empresarial</label>
                         <input type="text" id="grupoempresarial" required name="grupoempresarial" >
                     </div>             
+                </div>
+                <!--aqui el medio-->
+                <div class="centroEmpresaCentral">
+                    <div class="centroEmpresaCentralArriba">
+                        <label for="" class="lblcodigoCNAE">Codigo CNAE</label>
+                        <div class="divCNAE">
+                            <select name="CNAE" id="CNAE"> </select>                  
+                        </div>
+                    </div>   
+                    <div class="centroEmpresaCentralAbajo">
+                        <div class="rowlabelinputAbajo">            
+                            <div class="labelinput">
+                                <label for="">Ciudad</label>
+                                <input type="text" id="ciudad" name="ciudad" >
+                            </div>
+                            <div class="labelinput">
+                                <label for="">Codigo Postal</label>
+                                <input type="number" id="codigopostal" required name="codigopostal" >
+                            </div>
+                        </div>
+                        <div class="rowlabelinputAbajo">
+                            <div class="labelinput">
+                                <label for="">Direccion Empresa</label>
+                                <input type="text" id="direccionempresa" required name="direccionempresa" >
+                            </div>
+                            <div class="labelinput">
+                                <label for="">Encargado</label>
+                                <input type="text" id="encargado" required name="encargado" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--hasta aqui-->
+                <div class="rowlabelinput">
+                    <div class="labelinput">
+                        <label for="">Telefono</label>
+                        <input type="number" id="telefonoempresa" required name="telefonoempresa" >
                     </div> 
-
-                    <div class="rowlabelinput">            
                     <div class="labelinput">
-                        <label for="">Codigo CNAE</label>
-                        <input type="text" required id="CNAE" name="CNAE" >
-                    </div>
+                        <label for="">Email Empresa</label>
+                        <input type="text" id="emailempresa" required name="emailempresa" >
+                    </div>      
                     <div class="labelinput">
-                        <label for="">Descripcion CNAE</label>
-                        <input type="text" id="descripcionCNAE" name="descripcionCNAE" >
-                    </div>
-                    <div class="labelinput">
-                        <label for="">Ciudad</label>
-                        <input type="text" id="ciudad" name="ciudad" >
-                    </div>
-                    </div>
-
-                    <div class="rowlabelinput">
-                    <div class="labelinput">
-                        <label for="">Codigo Postal</label>
-                        <input type="number" id="codigopostal" required name="codigopostal" >
-                    </div>
-                    <div class="labelinput">
-                        <label for="">Direccion Empresa</label>
-                        <input type="text" id="direccionempresa" required name="direccionempresa" >
-                    </div>
-                    <div class="labelinput">
-                        <label for="">Encargado</label>
-                        <input type="text" id="encargado" required name="encargado" >
-                    </div>
-                              
-                    </div>
-
-                    <div class="rowlabelinput">
-                        <div class="labelinput">
-                            <label for="">Telefono</label>
-                            <input type="number" id="telefonoempresa" required name="telefonoempresa" >
-                        </div> 
-                        <div class="labelinput">
-                            <label for="">Email Empresa</label>
-                            <input type="text" id="emailempresa" required name="emailempresa" >
-                        </div>      
-                        <div class="labelinput">
-                            <label for="">Nº Trabajadores</label>
-                            <input type="number" id="ntrabajadoresempresa" required name="ntrabajadoresempresa" >
-                        </div>     
-                                 
-                    </div>
+                        <label for="">Nº Trabajadores</label>
+                        <input type="number" id="ntrabajadoresempresa" required name="ntrabajadoresempresa" >
+                    </div>                                 
                 </div>
-                <div class="btnInput">
-                    <label id="message" for=""></label>
-                    <div class="button">
-                        <input type="button" name="registrarEmpresa" id="registrarEmpresa" value="Registrar">
-                        <input type="button" name="cancelarEmpresa" id="cancelarEmpresa" value="Cancelar">
-                    </div>
+            </div>
+            <div class="btnInput">
+                <label id="message" for=""></label>
+                <div class="button">
+                    <input type="button" name="registrarEmpresa" id="registrarEmpresa" value="Registrar">
+                    <input type="button" name="cancelarEmpresa" id="cancelarEmpresa" value="Cancelar">
                 </div>
-            </form>
+            </div>
         </div>
         <div class="listEmpresa">
             <div class="headLista">
                 <h4>LISTA DE EMPRESA</h4>
-                <input type="text" name="buscarempresa" id="buscarempresa" placeholder="Escriba la empresa">
-                
+                <input type="text" name="buscarempresa" id="buscarempresa" placeholder="Escriba la empresa">                
             </div>
             <div class="tablaEmpresaScroll">
             <table id="tablaEmpresa">
@@ -90,9 +88,8 @@
                         <th>CIF</th>
                         <th>Razon Social</th>
                         <th>Grupo Empresarial</th>
-                        <th>CNAE</th>
-                        <th>Descripcion CNAE</th>
-                        <th>Cant. Tr.</th>
+                        <th>CNAE</th>                        
+                        <th>C.Trab</th>
                         <th>Direccion Empresa</th>
                         <th>Encargado Empresa</th>
                         <th>Email Empresa</th>
@@ -109,7 +106,29 @@
         </div>
         </div>
         <label id="updatelblEmpresa" ></label>
-
+        <div id="containerCNAEModificar" class="containerMostrarCNAE">
+             <div class="mostrarCNAE">
+                <h4 style="text-align: center;">CAMBIAR DATOS</h4>
+                <h4 style="text-align: center;">EMPRESA</h4>
+                <div class="datosCambioEmpresa">    
+                    <div class="inputCambioEmpresa">
+                        <label for="centroActual" class="centroActual" >CNAE Actual</label>
+                        <input type="text" disabled id="CNEAEActual">
+                    </div>          
+                    <div class="inputCambioEmpresa">
+                        <label for="">Cambiar CNAE</label>
+                        <select name="CambioCNAE" id="CambioCNAE"></select>               
+                    </div>
+                </div>
+                <div id="btnCambioEmpresa">
+                    <label for="" id="lblupdateCambiarEmpresa"></label>
+                    <div id="Cambiarbutton">
+                        <button id="btnCambioEmpresa">Cambiar</button>
+                        <button id="btnCambioCerrarEmpresa">Cerrar</button>
+                    </div>
+                </div>
+            </div>        
+        </div> 
     </div>
   <!--FIN EMPRESAS-->
   <!--CENTROS-->
@@ -231,7 +250,7 @@
     </div>
   <!--FIN CENTROS-->
   <!--TRABAJADORES-->
-  <div id="listaUsuarios" class="containerCentros">
+    <div id="listaUsuarios" class="containerCentros">
     <div class="headEmpresa">
         <h4>GESTION DE TRABAJADORES DE EMPRESA</h4>
         <form ><!--,,,,,,,-->
@@ -315,7 +334,29 @@
         </div>
     </div>
     <label id="updatelblTrabajador" ></label>
-   
-</div>
+    <div class="containerCambioCentroTrabajadores">
+        <div class="centroCambiolistaTrabajadores">
+            <h4 style="text-align: center;">CAMBIAR DATOS</h4>
+            <h4 style="text-align: center;">TRABAJADOR</h4>
+            <div class="datosCambioTrabajador">              
+                <label for="centroActual" >Centro Actual</label>
+                <input type="text" disabled id="centroActualTrabajador">
+                <label for="">Cambio de Centro</label>
+                <select name="cambioCentro" id="CambioCentro"></select>
+                <label for="">Estado</label>
+                <select name="estadoTrabajador" id="estadoTrabajador">
+                  
+                </select>
+            </div>
+            <div id="btnCambioCentroTrabajador">
+                <label for="" id="lblupdateCambiarTrabajador"></label>
+                <div id="Cambiarbutton">
+                    <button id="btnCambioCentroTrabajador">Cambiar</button>
+                    <button id="btnCambioCerrarCentroTrabajador">Cerrar</button>
+                </div>
+            </div>
+        </div>        
+    </div>
+    </div>
   <!--FIN TRABAJADORES-->
 </div>

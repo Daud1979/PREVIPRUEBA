@@ -21,10 +21,12 @@ app.use(express.urlencoded({extended:true}));
 app.use(bodyParser.json());
 /*importamos routes de empresa*/
 import empresaRoutes from './routes/empresa.routes.js'
-import indexRoutes from './routes/index.routes.js';
-import loginRoutes from './routes/login.routes.js';
+import indexRoutes   from './routes/index.routes.js';
+import loginRoutes   from './routes/login.routes.js';
+import CNAE          from './routes/CNAE.routes.js';
 app.use(empresaRoutes);
 app.use(indexRoutes);
 app.use(loginRoutes);
+app.use(CNAE);
 /*exportamos*/
 export default app;

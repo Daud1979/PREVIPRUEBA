@@ -71,6 +71,7 @@ li a:hover{
     width: 100%;
     text-align: center;  
     padding: 0.5rem 0; 
+    
 }
 .headEmpresa h4{
     padding-top: 1rem;
@@ -82,10 +83,11 @@ li a:hover{
     display: flex;
     width: 98%;
     margin: 0 auto;   
+   
 }
 .rowlabelinput{
    width: 25%;
-   margin: 0 auto;
+  
 }
 
 .labelinput{
@@ -99,6 +101,42 @@ li a:hover{
     display: block;   
     width: 36%;
     text-shadow: 5px 0 15px rgba(250, 248, 248, 0.2);    
+}
+#descripcionCNAE{
+    background: white;
+    color: black;
+}
+
+.centroEmpresaCentral{
+    width: 50%;
+    
+    
+}
+.centroEmpresaCentralArriba{
+    width: 100%;    
+    display: flex;
+    height: 30%;
+   
+}
+.centroEmpresaCentralAbajo{    
+    height: 70%;
+    width: 100%;
+    display: flex;
+    padding-top: 3px;
+}
+.rowlabelinputAbajo{
+    width: 50%;
+   
+ }
+.lblcodigoCNAE{
+    padding-top: 3px;
+    padding-right: 15px;
+    color: white;
+}
+.divCNAE{
+    width: 81%;
+    padding-left: 19px;
+    border-radius: 5px;
 }
 .labelinput input{
     font-size: 1.2rem;
@@ -142,7 +180,7 @@ li a:hover{
     text-align: center;
     width:400px;
     transform: translate(-50%, -50%);
-    
+    border-radius: 10px 0 10px 0;
 }
 .alertlbl{
     color:white;
@@ -154,6 +192,7 @@ li a:hover{
     top: 50%;
     text-align: center;
     transform: translate(-50%, -50%);
+  padding: 2rem;
 }
 .btnInput input{
     padding: 6px 15px;
@@ -180,7 +219,7 @@ li a:hover{
     background: #e7e5e5;
 }
 #CNAE{
-    width: 100px;
+   width: 100%;
 }
 #CIF{
     width: 100px;
@@ -429,13 +468,41 @@ td{
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    display: none;
+    display: none;    
     
 }
+
 .containerCentroTrabajadoresMostrar{
     display: block;
 }
+.containerMostrarCNAE{   
+     display: none;    
+    
+}
+.containerMostrarCNAEMostras{
+    position: absolute;
+    width:100%;
+    height: 100%;     
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+}
 /*un nuevo comentario*/
+.centrolistaTrabajadores{
+    background: #ffffff; 
+    width: 45%;
+    height: 75%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    text-align: end;
+    border: 1px solid black;
+    padding: 10px;
+    overflow-y: scroll;
+}
 .centrolistaTrabajadores{
     background: #ffffff; 
     width: 45%;
@@ -456,11 +523,143 @@ td{
     color: black;
     padding: 4px 10px;   
     width: 120px;
-    border-radius: 8px 0 8px 0;   
-  
+    border-radius: 8px 0 8px 0;    
 }
 #tbodyCT td{
     padding-right: 5px;
     padding-left: 5px;
     background: #d6d5d5; 
+}
+/**/
+.containerCambioCentroTrabajadores{
+    background:transparent;
+    position: absolute;
+    width:100%;
+    height: 100%;  
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;    
+}
+.containerCambioCentroTrabajadoresMostrar{
+    display: block;
+}
+/*un nuevo comentario*/
+.centroCambiolistaTrabajadores{
+    background: #131313;
+    width: 30%;
+    height: 40%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px 0 10px 0;
+    text-align: end;
+    border: 1px solid black;
+    padding: 10px;
+    color: white   ;
+}
+#btnCerrarCambioCentroTrabajador{
+    margin-top: 15px 10px 15px 10px;   
+    color: black;
+    padding: 4px 10px;   
+    width: 120px;
+    border-radius: 8px 0 8px 0;   
+   
+}
+.datosCambioTrabajador{
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+   
+}
+.mostrarCNAE{
+    background:#353535;
+    width: 40%;
+    height: 25%;
+    border-radius: 20px 0 20px 0;
+    position: absolute;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+    color: white;
+    transform: translate(-50%, -50%);
+}
+.datosCambioTrabajador input{
+    padding: 0.3rem;
+    margin: 0.5rem;
+    width:  98%;   
+    outline: none;    
+    border: none;
+    border-radius: 5px;
+    background: white;
+}
+.datosCambioTrabajador select{    
+    padding: 0.3rem;
+    margin: 0.5rem;
+    width:  100%;   
+    outline: none;    
+    border: none;
+    border-radius: 5px;    
+}
+#Cambiarbutton{
+    display: flex;
+    gap: 0.5rem;
+    
+}
+#Cambiarbutton button{
+   
+    padding: 0.5rem 1rem;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background: white;
+    border-radius: 10px 0px 10px 0px;
+}
+#Cambiarbutton button:hover{
+    background:#4057FB;
+    color: white;
+    outline: white;
+    border-color: 1px solid white;
+}
+#btnCambioCentroTrabajador{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;    
+}
+.inputCambioEmpresa{   
+    padding: 0.2rem 0;
+    margin: 0.5rem 0;
+    width:  50%;
+    min-width: 50%;
+    outline: none;    
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    width: 100%;
+    align-items: center;          
+}
+.centroActual{
+    padding-right: 10px;
+}
+
+#CNEAEActual{
+    width: 78%;
+    margin-left: 8px;
+    background: white;
+    color: black;
+    border-radius: 5px;
+}
+
+#CambioCNAE{
+    width:80%;
+    margin-left: 3px;
+}
+
+#btnCambioEmpresa{   
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
