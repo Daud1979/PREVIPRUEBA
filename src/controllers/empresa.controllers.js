@@ -8,22 +8,26 @@ export const getEmpresas =async (req,res )=>{
     res.render('empresa');
   
 }
+
 export const getAllEmpresas = async(req,res) => {// lista de todas las empresas de manera asincrona
     const pool = await getConnection();//funcion await
     const result = await pool.request().query('SELECT razonSocial,grupoEmpresarial,CIF,CNAE,direccionEmpresa,encargadoEmpresa,email,telefono,ciudad,codigopostal FROM EMPRESA ORDER BY razonSocial'); //consulta sql
     res.json(result);//retornamos el resultado en formato json
 }
+
 export const getEmpresa = async(req,res) => {// lista de todas las empresas de manera asincrona  
     const pool   = await getConnection();//funcion await
     const idActividad = req.params.id;
     const result = await pool.request().query(`SELECT * FROM ACTIVIDADES WHERE idActividad=${idActividad}`); //consulta sql
     res.json(result);//retornamos el resultado en formato json
 }
+
 export const postcargarCNAE = async (req,res)=>{
     const pool   = await getConnection();//funcion await
     const result = await pool.request().query(`SELECT idCNAE,CNAE=CNAE+', '+descripcionCNAE,CNAE1=CNAE FROM CNAE order by CNAE asc`); //consulta sql
     res.json(result.recordset);//retornamos el resultado en formato json
 }
+
 //buscado de empresa por cif, nombre empresa y encargado
 export const postEmpresaSearch = async (req,res)=>{
     const pool = await getConnection();//funcion await
@@ -32,6 +36,7 @@ export const postEmpresaSearch = async (req,res)=>{
     res.json(result.recordset);
     //res.render('empresa', { empresas: result.recordset });
 }
+
 export const postsearchTrabajador = async (req,res)=>{
     const pool = await getConnection();//funcion await
     const {search,idEmpresa} = req.body;     
@@ -41,6 +46,7 @@ export const postsearchTrabajador = async (req,res)=>{
     .query(`select  RANK() OVER (PARTITION BY ce.idCentro ORDER BY idTrabajador) AS n,NIF,nombres,apellidos,email,telefono,fechaAlta=CONVERT(VARCHAR, fechaAlta, 23),ce.nombreCentro,Estado=CASE WHEN te.Estado='H' THEN 'Habilitado' else 'Deshabilitado' end,idTrabajador from TRABAJADOREMPRESAS te inner join CENTROSEMPRESAS ce on (te.idCentro=ce.idCentro) where ce.idEmpresa=@idEmpresa and ( NIF LIKE '%' + @search + '%' OR nombres LIKE '%' + @search + '%' OR apellidos LIKE '%' + @search + '%' OR nombreCentro LIKE '%' + @search + '%' ) order by ce.idCentro`); //consulta sql
     res.json(result.recordset);
 }
+
 export const postverificarempresa = async (req,res)=>{
     const pool   = await getConnection();//funcion await
     const { razonsocial,CIF } = req.body;

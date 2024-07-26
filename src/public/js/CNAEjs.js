@@ -11,6 +11,9 @@ txtcodcomplejidadCNAE =document.querySelector('#codcomplejidad');
 txtgrupo = document.querySelector('#grupo');
 txtmessage = document.querySelector('#message');
 tablabody= document.querySelector('#tbody');
+lblupdateCNAE = document.querySelector('#updatelblCNAE');
+
+valorcelda='';
 //CARGAR AL PRINCIPIO
 document.addEventListener("DOMContentLoaded", function() {
     var inputs = document.querySelectorAll("input");
@@ -181,4 +184,81 @@ function eliminarCNAE(idCNAE){
     }).catch((error) => {
         console.error('Error:', error);
     });
+}
+
+//CAPTURAR LA CELDA
+tablabody.addEventListener('click', function(event) {  
+    if (event.target.tagName === 'TD') {       
+         valorcelda = event.target.innerText; 
+         console.log(valorcelda);      
+    }
+});
+
+//MODIFICAR LOS DATOS DE CELDAS
+function validarNumero(input) {
+    if (typeof input === 'number' && !isNaN(input)) {
+        return true;
+    } else if (typeof input === 'string' && input.trim() !== '' && !isNaN(Number(input))) {
+        return true;
+    }
+    return false;
+}
+
+$(document).on("blur","#tbody td[data-id]",function(event){  
+    let valor=this.innerHTML.trim();  
+    numero=false; 
+    let id =event.currentTarget.dataset.id;  //obtener el valor del data-id    
+    if (event.currentTarget.id =='tdtarifaCNAE_')
+    {
+        validarNumero(valor)?numero=false:numero=true
+        valor=valor.replace(',','.');
+    }   
+    if (valor != valorcelda && numero==false)
+    {      
+        if (valor!='<br>'&& valor!='')
+        {        
+            updateCNAE(event.currentTarget.id,id,valor);   
+        }
+        else
+        {
+            lblupdateCNAE.classList.remove('confirmlbl');
+            lblupdateCNAE.textContent=`DATOS NO VALIDOS`;                
+            lblupdateCNAE.classList.add('alertlbl');
+            this.innerHTML=valorcelda;
+            ocultarLabel(lblupdateCNAE);
+        }
+    }
+    else{
+        this.innerHTML=valorcelda;
+    }   
+});
+
+//FUNCION DE ACTUALIZAR captionSide: 
+function updateCNAE(atributo,id,valor){
+    const data= {atributo,id,valor};
+    fetch('/updateCNAE', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.rowsAffected){
+            lblupdateCNAE.classList.remove('alertlbl');
+            lblupdateCNAE.textContent=`SE REALIZO LA MODIFICACION`;
+            lblupdateCNAE.classList.add('confirmlbl');
+        }
+        else
+        {
+            lblupdateCNAE.classList.add('confirmlbl');
+            lblupdateCNAE.textContent=`NO SE PUDO REALIZAR LA MODIFICACION`;                         
+            lblupdateCNAE.classList.remove('alertlbl');
+        }
+        ocultarLabel(lblupdateCNAE);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+});
 }

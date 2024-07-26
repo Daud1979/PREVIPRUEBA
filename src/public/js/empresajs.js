@@ -719,6 +719,7 @@ tablabody.addEventListener('click', function(event) {
          valorcelda = event.target.innerText;       
     }
 });
+
 tablaCentro.addEventListener('click', function(event) {  
     if (event.target.tagName === 'TD') {       
          valorcelda = event.target.innerText;           
@@ -1277,6 +1278,7 @@ function eliminarCentro(idCentro,idEmpresa){
         console.error('Error:', error);
     })
 }   
+
 //CAMBIO DE CENTRO Y ESTADO PARA TRABAJADOR
 function cargarCambioTrabajadorCentro(idCentro,centro,estado,idTrabajador){
     centroActualTrabajador =document.querySelector('#centroActualTrabajador');
