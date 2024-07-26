@@ -24,9 +24,11 @@ import empresaRoutes from './routes/empresa.routes.js'
 import indexRoutes   from './routes/index.routes.js';
 import loginRoutes   from './routes/login.routes.js';
 import CNAE          from './routes/CNAE.routes.js';
+import trabajador    from './routes/trabajador.routes.js'
 app.use(empresaRoutes);
 app.use(indexRoutes);
 app.use(loginRoutes);
 app.use(CNAE);
+app.use(trabajador);
 /*exportamos*/
 export default app;

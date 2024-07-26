@@ -1,0 +1,375 @@
+
+.container{
+    width: 95%;
+    height: 87vh;    
+    margin: 0 auto;
+    
+}
+.Usuario{
+    width: 100%;
+    height: 100%;    
+    border-radius: 5px;
+  
+}
+.headUsuario{
+    background:#353535;
+    border-radius: 5px;
+    height:auto;
+    width: 100%;
+    text-align: center;  
+    padding: 0.5rem 0; 
+    
+}
+.headUsuario h4{
+    padding-top: 1rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 5px 0 15px rgba(250, 248, 248, 0.2); 
+    color: white;
+}
+.formUsuario{    
+    width: 70%;
+    margin: 0 auto;  
+    padding: 0;
+    display: flex;
+  
+    gap: 1rem;
+    
+}
+.rowlabelinput{
+    padding: 0 ;
+    margin: 0;
+    width: 33%;     
+    display: flex;
+    flex-direction: column;   
+    gap: 5px;
+  
+}
+
+.labelinput{     
+    text-align: start;    
+    display: flex;   
+    align-items: center;  
+    color: white;  
+   
+}
+.labelinput label{
+    display: block;
+    width: 27%;
+}
+.labelinput input{
+    font-size: 1.2rem;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    padding-left: 7px;
+    display: block;   
+    
+}
+#dni{
+    width: 35%;
+}
+#telefono{
+    width: 45%;
+}
+#hrsanual{
+    width: 20%;
+}
+.btnInput{
+    width: 98%;
+    text-align: end;    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;   
+}
+select{    
+    padding: 0.1rem; 
+    width:  80%; 
+    outline: none;    
+    border: none;
+    border-radius: 5px;
+    margin-left: 0.5rem;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.button{
+    margin: auto 0;
+   
+}
+.alert{
+    background: red;
+    color:white;
+    font-size: 1.1rem;
+    text-shadow: 5px 0 15px rgba(255, 255, 255, 0.1);  
+}
+.confirm{
+    color:white;
+    text-shadow: 5px 0 15px rgba(27, 38, 122, 1);  
+    font-size: 1.1rem;
+}
+
+.confirmlbl{
+    color:white;
+    background:#4057FB;
+    font-size: 1.3rem;
+    position: absolute;    
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    width:400px;
+    transform: translate(-50%, -50%);
+    border-radius: 10px 0 10px 0;
+}
+.alertlbl{
+    color:white;
+    background:#e70606;
+    font-size: 1.3rem;
+    position: absolute;
+    width: 400px;   
+    left:  50%;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+  padding: 2rem;
+}
+.btnInput input{
+    padding: 6px 15px;
+    background: white;
+    outline: none;
+    border-radius: 7px 0 7px 0;
+    border: none;
+    font-size: 1rem;
+}
+
+.btnInput input:hover{
+    background:#4057FB;
+    color: white;
+    outline: white;
+    border-color: 1px solid white;
+}
+.headLista{
+    background: rgb(192, 190, 190);
+    border-radius: 5px;  
+    height: 10%;
+}
+.headLista input{
+    padding: 0.2rem;
+    margin: 0.5rem;
+    width:  50%;
+    min-width: 50%;
+    outline: none;    
+    border: none;
+    border-radius: 5px;
+    padding-left: 1rem;
+}
+
+
+/*LISTA DE EMPRESA*/
+.listUsuario{
+    margin-top: 0.2rem;
+    border-radius: 5px;
+    height:90%;
+    width: 100%;        
+    display: flex;
+    flex-direction: column;
+    gap:0.2rem;
+}
+
+
+.headLista h4{    
+    margin-bottom: 0.5rem 0;
+    text-shadow: 5px 0 15px rgba(250, 248, 248, 1); 
+    color: rgb(0, 0, 0); 
+    text-align: center;     
+}
+#tablaUsuario{
+   border: 1px solid rgb(192, 190, 190);
+   border-radius: 5px;
+   width: 100%;
+}
+
+.tablaUsuarioScroll{
+    overflow-x: scroll;
+    width: 100%;
+    height: 100%;
+}
+#tablaUsuario thead{
+    background: #131313;
+    color:white;
+    border-color: 1px solid white;    
+}
+#tablaUsuario td{
+    border: 1px solid rgb(192, 190, 190);
+    background: white;
+}
+td{
+    transition: all 0.4s;
+    -moz-transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    padding: 0 5px;
+}
+ td:focus{
+    background: #0d0d0e;
+    color: #4057FB;
+    transform: translateY(10px) translateX(20px) rotateX(360deg);   
+    font-size: 1.5rem;
+}
+.centrar{
+    text-align: center;
+}
+.izquierda{
+    text-align: start;
+}
+.derecha{
+    text-align: end;
+}
+.deletes{
+    color: #e70606;
+}
+#tablaUsuario td:last-child{
+    width: 50px;
+    background: #F0F0F0;    
+    justify-content: center;
+}
+#tablaUsuario td:last-child button{
+  border: none;
+}
+
+#tbody button{
+    cursor: pointer;
+}
+.centrar{
+    text-align: center;
+}
+.izquierda{
+    text-align: start;
+}
+.derecha{
+    text-align: end;
+}
+.update{
+    color: rgb(194, 77, 10);
+}
+.pass{
+    color: rgb(158, 36, 67);
+}
+.containerMostrarUsuario{    
+    display: none;    
+}
+ 
+.containerMostrarUsuariosSi{
+    background:transparent;
+    position: absolute;
+    top: 57%;
+    left: 50%;
+    width: 100%;
+    height: 100vh;
+    transform: translate(-50%, -50%);
+    display: block;
+    border-radius: 5px;
+}
+
+.mostrarUsuario{
+    background: #131313;
+    width: 30%;
+    height: 40%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px 0 20px 0;
+    text-align: start;
+    border: 1px solid #353535;
+    padding: 10px;
+    color: white   ;
+   
+}
+.datosCambioUsuario{
+    margin-top: 2rem;
+}
+#Cambiarbutton{
+    display: flex;
+    gap: 0.5rem;
+    
+}
+#Cambiarbutton button{
+   
+    padding: 0.5rem 1rem;
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    background: white;
+    border-radius: 10px 0px 10px 0px;
+}
+#Cambiarbutton button:hover{
+    background:#4057FB;
+    color: white;
+    outline: white;
+    border-color: 1px solid white;
+}
+.inputCambioUsuario{
+    width: 100%;
+    display: flex;
+    align-items: center; 
+    gap: 10px;
+}
+.inputCambioUsuario input{
+    width: 60%;
+    background: white;
+    outline: none;    
+    border: none;
+    border-radius: 5px;
+    padding-left: 1rem;
+    padding: 0.2rem;
+    margin: 0.5rem;
+}
+.inputCambioEspecialidad{
+    width: 100%;
+    display: flex;
+    align-items: center;     
+}
+.inputCambioUsuario label{
+    width: 40%;
+}
+.inputCambioEspecialidad label{
+    width: 40%;
+}
+.inputCambioUsuario label{
+    width: 40%;
+}
+.inputCambioEspecialidad label{
+    width: 40%;
+}
+.inputCambioUsuario select{
+
+    background: white;
+    outline: none;    
+    border: none;
+    border-radius: 5px;
+    padding: 0.2rem;
+ 
+}
+#CambioEspecialidad{
+    width: 57%;
+}
+#CambioEstado{
+    width: 57%;
+}
+.btnCambioUsuario{   
+    padding-top: 2rem;    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

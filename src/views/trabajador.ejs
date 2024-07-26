@@ -1,0 +1,128 @@
+<%- include('./partials/navegador') %>
+<%- include('./partials/link_trabajador') %>
+<div class="container">
+    <div class="Usuario">
+          <div class="headUsuario">
+              <div class="titleUsuario">
+                  <h4>GESTION DE USUARIOS</h4>
+              </div>
+              <div class="formUsuario">
+                <div class="rowlabelinput">
+                    <div class="labelinput">                    
+                        <label for="">DNI/NIE</label>                    
+                        <input type="text" required id="dni" name="dni" >
+                    </div>
+                    <div class="labelinput">                    
+                        <label for="">Nombre</label>                    
+                        <input type="text" required id="nombre" name="nombre" >                  
+                    </div> 
+                    <div class="labelinput">
+                        <label for="">Apellidos</label>
+                        <input type="text" id="apellidos" required name="apellidos" >
+                    </div>             
+                </div>
+
+                <div class="rowlabelinput">
+                    <div class="labelinput">                    
+                        <label for="">Telefono</label>                    
+                        <input type="text" required id="telefono" name="telefono" >
+                    </div>
+                    <div class="labelinput">                    
+                        <label for="">Email</label>                    
+                        <input type="text" required id="email" name="email" >                  
+                    </div> 
+                    <div class="labelinput">
+                        <label for="">Titulacion</label>
+                        <input type="text" id="titulacion" required name="titulacion" >
+                    </div>             
+                </div>
+
+                <div class="rowlabelinput">
+                    <div class="labelinput">                    
+                        <label for="">Especialidad</label>                    
+                        <select name="especialidad" id="especialidad"></select>
+                    </div>
+                    <div class="labelinput">                    
+                        <label for="">Ubicacion</label>                    
+                        <input type="text" required id="ubicacion" name="ubicacion" >                  
+                    </div> 
+                    <div class="labelinput">
+                        <label for="">Hrs Anual</label>
+                        <input type="number" id="hrsanual" required name="hrsanual" >
+                    </div>             
+                </div>          
+          </div>
+          <div class="btnInput">
+            <label id="message" for=""></label>
+            <div class="button">
+                <input type="button" name="registrarUsuario" id="registrarUsuario" value="Registrar">
+                <input type="button" name="cancelarUsuario" id="cancelarUsuario" value="Cancelar">
+            </div>
+        </div>
+          </div>
+
+          <div class="listUsuario">
+              <div class="headLista">
+                  <h4>LISTA DE USUARIOS</h4>
+                  <input type="text" name="buscarUsuario" id="buscarUsuario" placeholder="Escriba">                
+              </div>
+              <div class="tablaUsuariocroll">
+              <table id="tablaUsuario">
+                  <thead>
+                      <tr>
+                          <th>Documento</th>
+                          <th>Nombres</th>
+                          <th>Apellidos</th>
+                          <th>Telefono</th>                        
+                          <th>Email</th>
+                          <th>Titulacion</th>  
+                          <th>Especialidad</th>  
+                          <th>Ubicacion</th>  
+                          <th>Hrs. Anual</th>  
+                          <th>Estado</th>  
+                          <th>Registro</th>  
+                          <th>Opcion</th>                     
+                      </tr>
+                  </thead>
+                  <tbody id="tbody">                  
+                  
+                  </tbody>
+              </table>
+          </div>
+          </div>
+          <label id="updatelblUsuario" ></label>      
+          <div id="containerUsuarioModificar" class="containerMostrarUsuario">
+            <div class="mostrarUsuario">
+               <h4 style="text-align: center;">CAMBIAR DATOS</h4>
+               <h4 style="text-align: center;">USUARIO</h4>
+               <div class="datosCambioUsuario">    
+                   <div class="inputCambioUsuario">
+                       <label for="centroActual" class="centroActual" >Especialidad Actual</label>
+                       <input type="text" disabled id="Especialidad">
+                   </div>          
+                   <div class="inputCambioEspecialidad">
+                       <label for="">Cambiar Especialidad</label>
+                       <select name="CambioEspecialidad" id="CambioEspecialidad"></select>               
+                   </div>
+                   <div class="inputCambioUsuario">
+                    <label for="centroActual" class="centroActual" >Estado Actual</label>
+                    <input type="text" disabled id="EstadoActual">
+                </div>          
+                <div class="inputCambioEspecialidad">
+                    <label for="">Cambiar Estado</label>
+                    <select name="CambioEstado" id="CambioEstado">
+                        <option value="H">Habilitado</option>
+                        <option value="D">Deshabilitado</option>
+                    </select>               
+                </div>
+               </div>
+               <div class="btnCambioUsuario">
+                   <label for="" id="lblupdateCambiarUsuario">asdasd</label>
+                   <div id="Cambiarbutton">
+                       <button id="btnCambioUsuario">Cambiar</button>
+                       <button id="btnCambioCerrarUsuario">Cerrar</button>
+                   </div>
+               </div>
+           </div>        
+       </div> 
+      </div>

@@ -570,7 +570,7 @@ td{
     outline: white;
     border-color: 1px solid white;
 }
-.btnCambioCentroTrabajador{
+#btnCambioCentroTrabajador{
     display: flex;
     justify-content:space-between;
     align-items: center;    
