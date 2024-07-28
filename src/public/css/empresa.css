@@ -346,7 +346,8 @@ td{
 #tablaCentro thead{
     background: #131313;
     color:white;
-    border-color: 1px solid white;    
+    border-color: 1px solid white;  
+  
 }
 
 #tablaTrabajador thead{
@@ -415,6 +416,7 @@ td{
     left: 50%;
     transform: translate(-50%, -50%);
     display: none;    
+   
     
 }
 
@@ -436,45 +438,46 @@ td{
 }
 /*un nuevo comentario*/
 .centrolistaTrabajadores{
-    background: #ffffff; 
-    width: 45%;
-    height: 75%;
+    background: #1d1d1d; 
+    width: 55%;
+    height: 50%;
     position: absolute;
-    top: 30%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 5px;
+    border-radius: 20px 0 20px 0;
     text-align: end;
-    border: 1px solid black;
-    padding: 10px;
-    overflow-y: scroll;
+    color: white;
+    padding: 5px;
+ 
+   
 }
-.centrolistaTrabajadores{
-    background: #ffffff; 
-    width: 45%;
-    height: 75%;
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border-radius: 5px;
-    text-align: end;
-    border: 1px solid black;
-    padding: 10px;
+.listaCentroTrabajadores{
+    border-radius: 20 0 20px 0;
+    height: 87%;
+    width: 99.7%;
     overflow-y: scroll;
+    background: white;
+    padding-bottom: 1rem;
 }
 #btnCerrarCentroTrabajador{
     margin-top: 15px 10px 15px 10px;
     background: white;
-    color: black;
+    color: rgb(51, 50, 50);
     padding: 4px 10px;   
     width: 120px;
     border-radius: 8px 0 8px 0;    
 }
+#tbodyCT{
+    border-radius: 20px 0 20px 0;
+    background: white;
+}
 #tbodyCT td{
     padding-right: 5px;
     padding-left: 5px;
-    background: #d6d5d5; 
+   color: black;
+   background: white; 
+   
 }
 /**/
 .containerCambioCentroTrabajadores{

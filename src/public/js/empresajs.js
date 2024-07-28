@@ -79,6 +79,15 @@ document.addEventListener("DOMContentLoaded", function() {
     var inputs = document.querySelectorAll("input");
     inputs.forEach(function(input) {
         input.setAttribute("autocomplete", "off");
+        input.setAttribute("spellcheck", "false");
+    });
+    var inputs = document.querySelectorAll("table input");
+
+    inputs.forEach(function(input) {
+        input.addEventListener("blur", function() {
+            input.setAttribute("spellcheck", "false");
+            input.setAttribute("autocomplete", "off");
+        });
     });
     cargarListaEmpresa()
 });
